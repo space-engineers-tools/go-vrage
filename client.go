@@ -38,6 +38,8 @@ type ClientConfig struct {
 	// If not provided, a default client with the specified Timeout will be used.
 	//
 	// Warning: when using a custom HttpClient the Timeout field in ClientConfig will be ignored.
+	//
+	// Default: http.Client{ Timeout: ClientConfig.Timeout }
 	HttpClient *http.Client
 }
 
