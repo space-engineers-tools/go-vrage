@@ -14,7 +14,7 @@ type ClientConfig struct {
 	// Example: "http://localhost:8080"
 	BaseURL string
 
-	// SecurityKey is the a key used for authentication with the API server.
+	// SecurityKey is a key used for authentication with the API server.
 	//
 	// This corresponds to the <RemoteSecurityKey> tag in SpaceEngineers-Dedicated.cfg.
 	SecurityKey string
@@ -74,18 +74,22 @@ type Sender struct {
 // Before using this client, ensure <RemoteApiEnabled> is set to true in
 // SpaceEngineers-Dedicated.cfg and the target server is running.
 type Client struct {
-	// HT
+	// Sender is the underlying request executor for the Client.
+	//
+	// While it can be used directly for raw requests, it's recommended to use the
+	// high-level methods provided by Client for type safety and convenience.
 	Sender *Sender
 }
 
 // GetConfig returns the ClientConfig of the current Client instance.
 //
 // Be careful not to leak sensitive information, such as the SecurityKey, when using this function.
-func GetConfig(c *Client) ClientConfig {
+func (c *Client) Config() ClientConfig {
 	return c.Sender.config
 }
 
 func NewClient(config ClientConfig) *Client {
+	// todo: add validation of config
 	config.setDefaults()
 
 	return &Client{
