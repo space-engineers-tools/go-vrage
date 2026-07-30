@@ -27,10 +27,10 @@ type ClientConfig struct {
 	// This corresponds to the <RemoteApiPort> tag in SpaceEngineers-Dedicated.cfg.
 	RemoteApiPort int
 
-	// SecurityKey is a key used for authentication with the API server.
+	// RemoteSecurityKey is the security key used for authenticating API requests.
 	//
 	// This corresponds to the <RemoteSecurityKey> tag in SpaceEngineers-Dedicated.cfg.
-	SecurityKey string
+	RemoteSecurityKey string
 
 	// Timeout specifies the maximum duration for an individual API request.
 	// If a request exceeds this duration, context.DeadlineExceeded is returned.
