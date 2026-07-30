@@ -34,10 +34,8 @@ import "github.com/space-engineers-tools/go-vrage"
 
 ## Usage
 
-> [!WARNING]
-> **Security Notice**: Never hardcode your security key in source code. Use environment variables for serious applications. The example below is for demonstration purposes only.
+> **⚠️ SECURITY NOTICE**: Never hardcode your security key in source code. Use environment variables for serious applications. The example below is for demonstration purposes only.
 
-<!-- todo -->
 ```go
 package main
 
