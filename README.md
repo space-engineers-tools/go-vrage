@@ -26,15 +26,10 @@ To install the package to your Go module, run the following command:
 go get -u github.com/space-engineers-tools/go-vrage
 ```
 
-To use the package in your code, import it as follows:
-
-```go
-import "github.com/space-engineers-tools/go-vrage"
-```
-
 ## Usage
 
 > **⚠️ SECURITY NOTICE**: Never hardcode your security key in source code. Use environment variables for serious applications. The example below is for demonstration purposes only.
+<!-- todo: use .env file -->
 
 ```go
 package main
