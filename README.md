@@ -8,8 +8,7 @@
 
 It can be used to programmatically manage and monitor [Dedicated Servers](https://www.spaceengineersgame.com/dedicated-servers), including retrieving server status, managing players, and executing server commands.
 
-> [!CAUTION]
-> **Active Development Notice**: This project is in an early stage. APIs are unstable and **breaking changes** may be introduced without prior notice. Use in production environments is strongly discouraged. When the first stable release is published, this notice will be removed.
+> **⚠️ WARNING**: This project is in an early development stage. **Breaking changes** may be introduced without prior notice. Use in production environments is strongly **discouraged**. When the first stable release is published, this notice will be removed.
 
 ## Features
 
