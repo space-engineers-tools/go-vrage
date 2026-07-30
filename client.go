@@ -17,12 +17,15 @@ var (
 
 // ClientConfig holds the configuration settings for the VRage Remote API client.
 type ClientConfig struct {
-	// BaseURL is the root URL of the Space Engineers server
+	// RemoteApiIP is the IP address of the Space Engineers server for API requests.
 	//
-	// Ensure the port matches the <RemoteApiPort> setting in SpaceEngineers-Dedicated.cfg.
+	// This corresponds to the <RemoteApiIP> tag in SpaceEngineers-Dedicated.cfg.
+	RemoteApiIP string
+
+	// RemoteApiPort is the port number of the Space Engineers server for API requests.
 	//
-	// Example: "http://localhost:8080"
-	BaseURL string
+	// This corresponds to the <RemoteApiPort> tag in SpaceEngineers-Dedicated.cfg.
+	RemoteApiPort int
 
 	// SecurityKey is a key used for authentication with the API server.
 	//
