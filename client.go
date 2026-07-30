@@ -1,8 +1,18 @@
 package vrage
 
 import (
+	"errors"
 	"net/http"
 	"time"
+)
+
+const (
+	DefaultTimeout     time.Duration = 10 * time.Second
+	DefaultAPIEndpoint string        = "/vrageremote"
+)
+
+var (
+	ErrInvalidConfig = errors.New("invalid client configuration: missing required fields")
 )
 
 // ClientConfig holds the configuration settings for the VRage Remote API client.
@@ -22,7 +32,7 @@ type ClientConfig struct {
 	// Timeout specifies the maximum duration for an individual API request.
 	// If a request exceeds this duration, context.DeadlineExceeded is returned.
 	//
-	// Default: 10 * time.Second
+	// Default: vrage.DefaultTimeout
 	Timeout time.Duration
 
 	// APIEndpoint is the base route path for API requests.
@@ -30,7 +40,7 @@ type ClientConfig struct {
 	// Note: While this path is fixed by the Space Engineers server, this option
 	// allows customization when routing through a reverse proxy.
 	//
-	// Default: "/vrageremote"
+	// Default: vrage.DefaultAPIEndpoint
 	APIEndpoint string
 
 	// HttpClient allows the use of a custom HTTP client for making requests.
@@ -38,18 +48,17 @@ type ClientConfig struct {
 	// If not provided, a default client with the specified Timeout will be used.
 	//
 	// Warning: when using a custom HttpClient the Timeout field in ClientConfig will be ignored.
-	//
-	// Default: http.Client{ Timeout: ClientConfig.Timeout }
+	// In this case, ensure the custom HttpClient has an appropriate timeout set to avoid hanging requests.
 	HttpClient *http.Client
 }
 
 // setDefaults initializes default values for ClientConfig fields that are not explicitly set.
 func (c *ClientConfig) setDefaults() {
 	if c.Timeout == 0 {
-		c.Timeout = 10 * time.Second
+		c.Timeout = DefaultTimeout
 	}
 	if c.APIEndpoint == "" {
-		c.APIEndpoint = "/vrageremote"
+		c.APIEndpoint = DefaultAPIEndpoint
 	}
 	if c.HttpClient == nil {
 		c.HttpClient = &http.Client{
@@ -88,6 +97,7 @@ func (c *Client) Config() ClientConfig {
 	return c.Sender.config
 }
 
+// NewClient creates a new Client instance with the provided configuration.
 func NewClient(config ClientConfig) *Client {
 	// todo: add validation of config
 	config.setDefaults()
