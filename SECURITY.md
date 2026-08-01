@@ -14,6 +14,6 @@ Older versions do not receive backported security patches.
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in this software, please [create a private security advisory](/security/advisories/new).
+If you discover a security vulnerability in this software, please [create a private security advisory](https://github.com/space-engineers-tools/go-vrage/security/advisories/new).
 
 Please do not create a public issue for critical security vulnerabilities, as this may expose the vulnerability to malicious actors before it can be addressed.
