@@ -74,7 +74,7 @@ type ClientConfig struct {
 	//
 	// Default:
 	//  ToPtr(DefaultAPIEndpoint)
-	APIEndpoint *string `validate:"-"`
+	ApiEndpoint *string `validate:"-"` //nolint:revive
 
 	// HTTPClient allows the use of a custom HTTP client for making requests.
 	//
@@ -99,8 +99,8 @@ func (c *ClientConfig) SetDefaults() {
 	if c.Timeout == 0 {
 		c.Timeout = DefaultTimeout
 	}
-	if c.APIEndpoint == nil {
-		c.APIEndpoint = ToPtr(DefaultAPIEndpoint)
+	if c.ApiEndpoint == nil {
+		c.ApiEndpoint = ToPtr(DefaultAPIEndpoint)
 	}
 	if c.HTTPClient == nil {
 		c.HTTPClient = &http.Client{
