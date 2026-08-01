@@ -7,6 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// Default configuration values for the VRage Remote API client.
 const (
 	DefaultTimeout     time.Duration = 10 * time.Second
 	DefaultAPIEndpoint string        = "/vrageremote"
@@ -32,13 +33,13 @@ type ClientConfig struct {
 	//  "127.0.0.1"
 	//  "example.com"
 	//  "play.cool-server.com"
-	RemoteApiIP string `validate:"required,ip|fqdn"`
+	RemoteApiIP string `validate:"required,ip|fqdn"` //nolint:revive // because its close to the original name in SpaceEngineers-Dedicated.cfg
 
 	// RemoteSecurityKey is the security key used for authenticating API requests.
 	//
 	// Corresponding Setting in SpaceEngineers-Dedicated.cfg:
 	// 	<RemoteSecurityKey>
-	RemoteSecurityKey string `validate:"required"`
+	RemoteSecurityKey string `validate:"required"` //nolint:revive // because its close to the original name in SpaceEngineers-Dedicated.cfg
 
 	// RemoteApiPort is the port of the Remote API on the Space Engineers server.
 	//
@@ -47,13 +48,13 @@ type ClientConfig struct {
 	//
 	// Default:
 	//  8080
-	RemoteApiPort uint32 `validate:"port"`
+	RemoteApiPort uint32 `validate:"port"` //nolint:revive
 
 	// Timeout specifies the maximum duration for an API request before an vrage.ErrRequestTimeout error is returned.
 	//
 	// Default:
 	//  vrage.DefaultTimeout
-	Timeout time.Duration `validate:"gte=0"`
+	Timeout time.Duration `validate:"gte=0"` //nolint:revive
 
 	// UseHTTPS indicates whether to use HTTPS for API requests.
 	//
@@ -75,21 +76,21 @@ type ClientConfig struct {
 	//  ToPtr(DefaultAPIEndpoint)
 	APIEndpoint *string `validate:"-"`
 
-	// HttpClient allows the use of a custom HTTP client for making requests.
+	// HTTPClient allows the use of a custom HTTP client for making requests.
 	//
 	// If not provided, a default client with the specified Timeout will be used.
 	//
-	// Warning: when using a custom HttpClient the Timeout field in ClientConfig will be ignored.
-	// In this case, ensure the custom HttpClient has an appropriate timeout set to avoid hanging requests.
-	HttpClient *http.Client `validate:"-"`
+	// Warning: when using a custom HTTPClient the Timeout field in ClientConfig will be ignored.
+	// In this case, ensure the custom HTTPClient has an appropriate timeout set to avoid hanging requests.
+	HTTPClient *http.Client `validate:"-"`
 }
 
-// validate checks the ClientConfig for required fields and valid values.
+// Validate checks the ClientConfig for required fields and valid values.
 func (c *ClientConfig) Validate() error {
 	return validate.Struct(c)
 }
 
-// setDefaults initializes default values for ClientConfig fields that are not explicitly set.
+// SetDefaults initializes default values for ClientConfig fields that are not explicitly set.
 func (c *ClientConfig) SetDefaults() {
 	if c.RemoteApiPort == 0 {
 		c.RemoteApiPort = DefaultPort
@@ -101,8 +102,8 @@ func (c *ClientConfig) SetDefaults() {
 	if c.APIEndpoint == nil {
 		c.APIEndpoint = ToPtr(DefaultAPIEndpoint)
 	}
-	if c.HttpClient == nil {
-		c.HttpClient = &http.Client{
+	if c.HTTPClient == nil {
+		c.HTTPClient = &http.Client{
 			Timeout: c.Timeout,
 		}
 	}

@@ -4,10 +4,9 @@ import (
 	"errors"
 )
 
+// Predefined errors for common failure scenarios in API client.
 var (
-	// remote errors (invoked by the server)
-
-	ErrConnectionFailed   error = errors.New("failed to connect to the server: check if the server is running and reachable")
-	ErrInvalidSecurityKey error = errors.New("server returned StatusForbidden: security key is invalid or missing")
-	ErrRequestTimeout     error = errors.New("request timed out: the server did not respond in time")
+	ErrConnectionFailed   = errors.New("failed to connect to the server: check if the server is running and reachable")
+	ErrInvalidSecurityKey = errors.New("server returned StatusForbidden: security key is invalid or missing")
+	ErrRequestTimeout     = errors.New("request timed out: the server did not respond in time")
 )

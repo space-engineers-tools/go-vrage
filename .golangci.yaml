@@ -1,0 +1,13 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - revive # checks for style mistakes, comments, and other code quality issues.
+    - errcheck # checks for unchecked errors in code.
+    - govet # checks for suspicious constructs in code.
+    - ineffassign # checks for ineffectual assignments in code.
+    - staticcheck # checks for bugs, performance issues, and style mistakes in code.
+    - unused # checks for unused code, variables, and imports.

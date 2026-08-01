@@ -9,7 +9,7 @@ import (
 const Repository string = "github.com/space-engineers-tools/go-vrage"
 
 // Version is the current version of the go-vrage package
-var Version string = func() string {
+var Version = func() string {
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
 		return "unknown"

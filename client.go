@@ -41,14 +41,14 @@ func NewClient(config ClientConfig) (*Client, error) {
 		return nil, err
 	}
 
-	if config.HttpClient == nil {
-		config.HttpClient = http.DefaultClient
+	if config.HTTPClient == nil {
+		config.HTTPClient = http.DefaultClient
 	}
 
 	return &Client{
 		Sender: &Sender{
 			config:     config,
-			httpClient: config.HttpClient,
+			httpClient: config.HTTPClient,
 		},
 	}, nil
 }
