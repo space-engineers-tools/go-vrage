@@ -27,22 +27,28 @@ type Client struct {
 	Sender *Sender
 }
 
-// GetConfig returns the ClientConfig of the current Client instance.
-//
-// Be careful not to leak sensitive information, such as the SecurityKey, when using this function.
+// Config returns a copy of the ClientConfig with the RemoteSecurityKey field cleared for security reasons.
 func (c *Client) Config() ClientConfig {
-	return c.Sender.config
+	config := c.Sender.config
+	config.RemoteSecurityKey = ""
+	return config
 }
 
 // NewClient creates a new Client instance with the provided configuration.
-func NewClient(config ClientConfig) *Client {
-	// todo: add validation of config
-	config.setDefaults()
+func NewClient(config ClientConfig) (*Client, error) {
+	err := config.Validate()
+	if err != nil {
+		return nil, err
+	}
+
+	if config.HttpClient == nil {
+		config.HttpClient = http.DefaultClient
+	}
 
 	return &Client{
 		Sender: &Sender{
 			config:     config,
 			httpClient: config.HttpClient,
 		},
-	}
+	}, nil
 }
