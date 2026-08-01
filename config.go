@@ -33,13 +33,13 @@ type ClientConfig struct {
 	//  "127.0.0.1"
 	//  "example.com"
 	//  "play.cool-server.com"
-	RemoteApiIP string `validate:"required,ip|fqdn"` //nolint:revive // because its close to the original name in SpaceEngineers-Dedicated.cfg
+	RemoteApiIP string `validate:"required,ip|fqdn"` //nolint:revive
 
 	// RemoteSecurityKey is the security key used for authenticating API requests.
 	//
 	// Corresponding Setting in SpaceEngineers-Dedicated.cfg:
 	// 	<RemoteSecurityKey>
-	RemoteSecurityKey string `validate:"required"` //nolint:revive // because its close to the original name in SpaceEngineers-Dedicated.cfg
+	RemoteSecurityKey string `validate:"required"`
 
 	// RemoteApiPort is the port of the Remote API on the Space Engineers server.
 	//
@@ -54,7 +54,7 @@ type ClientConfig struct {
 	//
 	// Default:
 	//  vrage.DefaultTimeout
-	Timeout time.Duration `validate:"gte=0"` //nolint:revive
+	Timeout time.Duration `validate:"gte=0"`
 
 	// UseHTTPS indicates whether to use HTTPS for API requests.
 	//
