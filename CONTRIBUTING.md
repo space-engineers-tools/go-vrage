@@ -6,7 +6,7 @@ Thank you for considering contributing to this project. We welcome contributions
 
 Since this project is a library, it is important to maintain a high standard of code quality, documentation, testing and backward compatibility.
 
-To ensure the quality all contributions should comply with the following guidelines.
+To ensure quality all contributions should comply with the following guidelines.
 
 If you differ from any of the guidelines below, please provide a justification in the PR description and it might be merged anyway.
 
