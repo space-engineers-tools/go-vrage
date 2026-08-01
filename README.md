@@ -13,11 +13,7 @@ It can be used to programmatically manage and monitor [Dedicated Servers](https:
 
 ## Features
 
-- **Abstracted HMAC Authentication:** Automatically manages nonces, timestamps, and HMAC-SHA1 signature generation.
-- **Dual Response Format:** Delivers strongly typed Go structs while preserving raw JSON payload bytes for custom parsing or logging.
-- **Idiomatic Error Handling:** Maps API responses into custom Go error types for straightforward error inspection.
-- **Context Support:** Full `context.Context` propagation for timeout control and request cancellation across all endpoints.
-- **Customizable HTTP Client:** Easily inject custom `http.Client` instances or middleware configurations.
+coming soon
 
 ## Installation
 
