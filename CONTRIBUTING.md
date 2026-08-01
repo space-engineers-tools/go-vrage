@@ -4,8 +4,6 @@ Hi there! <img src="https://raw.githubusercontent.com/EchterTimo/EchterTimo/refs
 
 Thank you for considering to contribute to this project. We welcome contributions from everyone even small ones like fixing typos or improving documentation.
 
----
-
 Since this project is a library, it is important to maintain a high standard of code quality, documentation, testing and backward compatibility.
 
 To ensure the quality all contributions should comply with the following guidelines.
@@ -35,3 +33,4 @@ If you differ from any of the guidelines below, please provide a justification i
 The following tools are recommended for development:
 
 - [pkgsite](https://github.com/golang/pkgsite) is a local version of [pkg.go.dev](https://pkg.go.dev/). It allows you to preview the documentation without publishing it.
+- [golangci-lint](https://github.com/golangci/golangci-lint) is a linter for Go. You can manually run it or register it as a pre-push hook like shown in [.githooks/README.md](.githooks/README.md).
