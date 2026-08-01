@@ -8,7 +8,8 @@
 
 It can be used to programmatically manage and monitor [Dedicated Servers](https://www.spaceengineersgame.com/dedicated-servers), including retrieving server status, managing players, and executing server commands.
 
-> **⚠️ WARNING**: This project is in an early development stage. **Breaking changes** may be introduced without prior notice. Use in production environments is strongly **discouraged**. When the first stable release is published, this notice will be removed.
+> [!WARNING]
+> This project is in an early development stage. **Breaking changes** may be introduced without prior notice. Use in production environments is strongly **discouraged**. When the first stable release is published, this notice will be removed.
 
 ## Features
 
@@ -28,34 +29,7 @@ go get -u github.com/space-engineers-tools/go-vrage
 
 ## Usage
 
-> **⚠️ SECURITY NOTICE**: Never hardcode your security key in source code. Use environment variables for serious applications. The example below is for demonstration purposes only.
-<!-- todo: use .env file -->
-
-```go
-package main
-
-import (
-    "fmt"
-    "time"
-
-    "github.com/space-engineers-tools/go-vrage"
-)
-
-func main() {
-    // Create a new VRage client with your server configuration
-    client := vrage.NewClient(vrage.ClientConfig{
-        BaseURL:     "your-base-url",
-        SecurityKey: "your-security-key",
-    })
-
-    status, err := client.Server()
-    if err != nil {
-        fmt.Println("Error retrieving server status:", err)
-        return
-    }
-    fmt.Println("Server status:", status)
-}
-```
+coming soon
 
 ## Contributing
 
