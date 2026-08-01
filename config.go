@@ -90,7 +90,7 @@ func (c *ClientConfig) Validate() error {
 }
 
 // setDefaults initializes default values for ClientConfig fields that are not explicitly set.
-func (c *ClientConfig) setDefaults() {
+func (c *ClientConfig) SetDefaults() {
 	if c.RemoteApiPort == 0 {
 		c.RemoteApiPort = DefaultPort
 	}
