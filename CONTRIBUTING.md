@@ -2,7 +2,7 @@
 
 Hi there! <img src="https://raw.githubusercontent.com/EchterTimo/EchterTimo/refs/heads/main/images/wave.gif" width="20px" height="20px">
 
-Thank you for considering to contribute to this project. We welcome contributions from everyone even small ones like fixing typos or improving documentation.
+Thank you for considering contributing to this project. We welcome contributions of all kinds. Even small ones, such as fixing typos or improving documentation.
 
 Since this project is a library, it is important to maintain a high standard of code quality, documentation, testing and backward compatibility.
 
