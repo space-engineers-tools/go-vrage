@@ -2,9 +2,36 @@ package vrage
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 )
 
-// Predefined errors for common failure scenarios in API client.
+// Predefined errors for configuration validation
+var (
+	ErrConfigIncomplete   = errors.New("invalid config: missing required fields")
+	ErrConfigInvalid      = errors.New("invalid config: field validation failed")
+	ErrConfigIncompatible = errors.New("invalid config: conflicting settings")
+)
+
+// NewErrConfigIncomplete creates a new ErrConfigIncomplete
+func NewErrConfigIncomplete(fieldNames ...string) error {
+	joinedFields := strings.Join(fieldNames, ", ")
+	return fmt.Errorf("%w: [%s]", ErrConfigIncomplete, joinedFields)
+}
+
+// NewErrConfigInvalid creates a new ErrConfigInvalid
+func NewErrConfigInvalid(fieldName string, reason string) error {
+	return fmt.Errorf("%w: field '%s' is invalid: %s", ErrConfigInvalid, fieldName, reason)
+}
+
+// NewErrConfigIncompatible creates a new ErrConfigIncompatible
+func NewErrConfigIncompatible(field1, field2 string, reason string) error {
+	return fmt.Errorf("%w: fields '%s' and '%s' conflict: %s", ErrConfigIncompatible, field1, field2, reason)
+}
+
+// todo: errors below are not final. they are just ideas.
+
+// Predefined errors for API request handling
 var (
 	ErrConnectionFailed   = errors.New("failed to connect to the server: check if the server is running and reachable")
 	ErrInvalidSecurityKey = errors.New("server returned StatusForbidden: security key is invalid or missing")
