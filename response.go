@@ -1,8 +1,8 @@
 package vrage
 
 // BaseResponse represents the base response structure of the API.
-type BaseResponse struct {
-	Data JSON `json:"data"`
+type BaseResponse[T any] struct {
+	Data T    `json:"data"`
 	Meta Meta `json:"meta"`
 }
 
