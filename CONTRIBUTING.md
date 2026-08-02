@@ -17,7 +17,7 @@ To ensure quality, all contributions should comply with the following guidelines
 ### 1. Domain Rules and Project Scope
 
 - This project is a client for a HTTP API. It is not a game mod or a server plugin.
-- It should focus on providing a stateless and typed interface to the API. Caching or event handling should be done in separate projects.
+- It should focus on providing a stateless and typed API methods. Caching or event handling should be done in separate projects.
 - Please minimize the number of external  dependencies.
 - Since this project is a lib and doesn't need an entry point, the following files should not be included in the repo:
   - `main.go`
