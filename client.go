@@ -2,10 +2,10 @@ package vrage
 
 type Client struct {
 	Config  ClientConfig
-	HTTP    httpClient
-	Session apiSession
-	Server  apiServer
-	Admin   apiAdmin
+	HTTP    HTTPClient
+	Session APISession
+	Server  APIServer
+	Admin   APIAdmin
 }
 
 // NewClient creates a new Client instance with the provided configuration.
@@ -15,14 +15,14 @@ func NewClient(config ClientConfig) (*Client, error) {
 		return nil, err
 	}
 
-	httpClient := httpClient{config: &config}
+	httpClient := HTTPClient{config: &config}
 
 	return &Client{
 		Config:  config,
 		HTTP:    httpClient,
-		Session: apiSession{http: &httpClient},
-		Server:  apiServer{http: &httpClient},
-		Admin:   apiAdmin{http: &httpClient},
+		Session: APISession{http: &httpClient},
+		Server:  APIServer{http: &httpClient},
+		Admin:   APIAdmin{http: &httpClient},
 	}, nil
 }
 

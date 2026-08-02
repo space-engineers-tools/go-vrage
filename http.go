@@ -28,8 +28,8 @@ type httpHeaders = map[string]string
 // todo: HTTPClient sends requests and returns the response body as a map and error.
 // todo: parsing the responses should be done by in the Client methods.
 
-// httpClient handles all HTTP requests.
-type httpClient struct {
+// HTTPClient handles all HTTP requests.
+type HTTPClient struct {
 	config *ClientConfig
 }
 
@@ -117,7 +117,7 @@ func buildURL(config *ClientConfig, endpoint string) string {
 	)
 }
 
-func (c *httpClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
+func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
 	url := buildURL(c.config, endpoint)
 
 	// Build a request without dispatching it yet
@@ -153,10 +153,10 @@ func (c *httpClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap,
 	return response, nil
 }
 
-func (c *httpClient) V1ServerPing() (*http.Response, error) {
+func (c *HTTPClient) V1ServerPing() (*http.Response, error) {
 	return c.Do(http.MethodGet, "/v1/server/ping", jsonMap(nil), httpHeaders(nil))
 }
 
-func (c *httpClient) V1ServerStatus() (*http.Response, error) {
+func (c *HTTPClient) V1ServerStatus() (*http.Response, error) {
 	return c.Do(http.MethodGet, "/v1/server", jsonMap(nil), httpHeaders(nil))
 }

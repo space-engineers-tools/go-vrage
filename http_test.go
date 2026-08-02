@@ -88,7 +88,7 @@ func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
 	}
 	config.SetDefaults()
 
-	client := httpClient{config: &config}
+	client := HTTPClient{config: &config}
 	response, err := client.Do(http.MethodGet, "/v1/server/ping", nil, nil)
 	if err != nil {
 		t.Fatalf("expected request to succeed, got %v", err)

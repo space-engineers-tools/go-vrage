@@ -1,8 +1,8 @@
 package vrage
 
-// apiSession provides access to the /v1/session API routes.
-type apiSession struct {
-	http *httpClient
+// APISession provides access to the /v1/session API routes.
+type APISession struct {
+	http *HTTPClient
 }
 
 // todo: APISession needs methods
