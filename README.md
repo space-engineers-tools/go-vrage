@@ -25,7 +25,7 @@ go get -u github.com/space-engineers-tools/go-vrage
 
 ## Usage
 
-coming soon
+Please check out the [examples](/examples) directory for usage examples.
 
 ## Contributing
 
