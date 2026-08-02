@@ -16,13 +16,13 @@ const (
 
 var validate = validator.New()
 
-// ToPtr returns a pointer to the given value.
-func ToPtr[T any](value T) *T {
+// toPtr returns a pointer to the given value.
+func toPtr[T any](value T) *T {
 	return &value
 }
 
-// FromPtr returns the value of the given pointer or the zero value of T if the pointer is nil.
-func FromPtr[T any](ptr *T) T {
+// fromPtr returns the value of the given pointer or the zero value of T if the pointer is nil.
+func fromPtr[T any](ptr *T) T {
 	if ptr == nil {
 		var zero T
 		return zero
@@ -108,7 +108,7 @@ func (c *ClientConfig) SetDefaults() {
 		c.Timeout = DefaultTimeout
 	}
 	if c.BaseEndpoint == nil {
-		c.BaseEndpoint = ToPtr(DefaultBaseEndpoint)
+		c.BaseEndpoint = toPtr(DefaultBaseEndpoint)
 	}
 	if c.HTTPClient == nil {
 		c.HTTPClient = &http.Client{

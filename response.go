@@ -8,6 +8,8 @@ type BaseResponse[T any] struct {
 
 // Meta represents the metadata of the API response.
 type Meta struct {
-	APIVersion string  `json:"apiVersion"`
-	QueryTime  float64 `json:"queryTime"`
+	// APIVersion is the version of the API.
+	APIVersion string `json:"apiVersion"`
+	// QueryTime is the time taken (in seconds) to process the request.
+	QueryTime float64 `json:"queryTime"`
 }

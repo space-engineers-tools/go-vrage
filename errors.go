@@ -13,19 +13,19 @@ var (
 	ErrConfigIncompatible = errors.New("invalid config: conflicting settings")
 )
 
-// NewErrConfigIncomplete creates a new ErrConfigIncomplete.
-func NewErrConfigIncomplete(fieldNames ...string) error {
+// newErrConfigIncomplete creates a new ErrConfigIncomplete.
+func newErrConfigIncomplete(fieldNames ...string) error {
 	joinedFields := strings.Join(fieldNames, ", ")
 	return fmt.Errorf("%w: [%s]", ErrConfigIncomplete, joinedFields)
 }
 
-// NewErrConfigInvalid creates a new ErrConfigInvalid.
-func NewErrConfigInvalid(fieldName string, reason string) error {
+// newErrConfigInvalid creates a new ErrConfigInvalid.
+func newErrConfigInvalid(fieldName string, reason string) error {
 	return fmt.Errorf("%w: field '%s' is invalid: %s", ErrConfigInvalid, fieldName, reason)
 }
 
-// NewErrConfigIncompatible creates a new ErrConfigIncompatible.
-func NewErrConfigIncompatible(field1, field2 string, reason string) error {
+// newErrConfigIncompatible creates a new ErrConfigIncompatible.
+func newErrConfigIncompatible(field1, field2 string, reason string) error {
 	return fmt.Errorf("%w: fields '%s' and '%s' conflict: %s", ErrConfigIncompatible, field1, field2, reason)
 }
 

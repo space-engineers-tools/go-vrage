@@ -1,8 +1,8 @@
 package vrage
 
-// APIAdmin provides access to the /v1/admin API routes.
-type APIAdmin struct {
-	http *HTTPClient
+// apiAdmin provides access to the /v1/admin API routes.
+type apiAdmin struct {
+	http *httpClient
 }
 
 // todo: APIAdmin needs methods

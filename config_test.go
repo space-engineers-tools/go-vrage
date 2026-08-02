@@ -21,7 +21,7 @@ func validConfig() vrage.ClientConfig {
 		RemoteSecurityKey: "top-secret",
 		Timeout:           2 * time.Second,
 		UseHTTPS:          false,
-		BasePath:          strPtr("/vrageremote"),
+		BaseEndpoint:      strPtr("/vrageremote"),
 	}
 }
 
@@ -96,12 +96,12 @@ func TestClientConfigValidate_NegativeTimeout(t *testing.T) {
 
 func TestClientConfigValidate_EndpointCanBeNilOrEmpty(t *testing.T) {
 	cfg := validConfig()
-	cfg.BasePath = nil
+	cfg.BaseEndpoint = nil
 
 	err := cfg.Validate()
 	assert.NoError(t, err)
 
-	cfg.BasePath = strPtr("")
+	cfg.BaseEndpoint = strPtr("")
 	err = cfg.Validate()
 	assert.NoError(t, err)
 }
