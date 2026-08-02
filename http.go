@@ -156,3 +156,7 @@ func (c *httpClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap,
 func (c *httpClient) V1ServerPing() (*http.Response, error) {
 	return c.Do(http.MethodGet, "/v1/server/ping", jsonMap(nil), httpHeaders(nil))
 }
+
+func (c *httpClient) V1ServerStatus() (*http.Response, error) {
+	return c.Do(http.MethodGet, "/v1/server", jsonMap(nil), httpHeaders(nil))
+}

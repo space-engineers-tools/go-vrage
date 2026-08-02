@@ -12,23 +12,22 @@ type APIServerPingV1Data struct {
 }
 
 func (s *apiServer) PingV1() (BaseResponse[APIServerPingV1Data], error) {
-	var pingV1Response BaseResponse[APIServerPingV1Data]
+	var responseStruct BaseResponse[APIServerPingV1Data]
 	httpResponse, err := s.http.V1ServerPing()
 	if err != nil {
-		return pingV1Response, err
+		return responseStruct, err
 	}
 
-	pingV1Response, err = parseResponse[APIServerPingV1Data](httpResponse)
+	responseStruct, err = parseResponse[APIServerPingV1Data](httpResponse)
 	if err != nil {
-		return pingV1Response, err
+		return responseStruct, err
 	}
 
-	return pingV1Response, nil
+	return responseStruct, nil
 }
 
 // region GET /v1/server
 
-type ApiServerStatusResponse = BaseResponse[APIServerStatusData]
 type APIServerStatusData struct {
 	Game              string  `json:"Game"`
 	IsReady           bool    `json:"IsReady"`
@@ -42,6 +41,21 @@ type APIServerStatusData struct {
 	UsedPCU           int     `json:"UsedPCU"`
 	Version           string  `json:"Version"`
 	WorldName         string  `json:"WorldName"`
+}
+
+func (s *apiServer) StatusV1() (BaseResponse[APIServerStatusData], error) {
+	var responseStruct BaseResponse[APIServerStatusData]
+	httpResponse, err := s.http.V1ServerStatus()
+	if err != nil {
+		return responseStruct, err
+	}
+
+	responseStruct, err = parseResponse[APIServerStatusData](httpResponse)
+	if err != nil {
+		return responseStruct, err
+	}
+
+	return responseStruct, nil
 }
 
 // func (s *APIServer) Status() (JSON, error) {
