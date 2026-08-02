@@ -28,5 +28,5 @@ go.work.sum
 .env
 
 # Since this project is a lib the following files should not be included in the repo:
-main.go
-cmd/
+/main.go
+/cmd/
