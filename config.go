@@ -9,10 +9,10 @@ import (
 
 // Default configuration values for the VRage Remote API client.
 const (
-	DefaultTimeout     time.Duration = 10 * time.Second
-	DefaultBasePath    string        = "/vrageremote"
-	DefaultContentType string        = "application/json"
-	DefaultPort        uint32        = 8080
+	DefaultTimeout      time.Duration = 10 * time.Second
+	DefaultBaseEndpoint string        = "/vrageremote"
+	DefaultContentType  string        = "application/json"
+	DefaultPort         uint32        = 8080
 )
 
 var validate = validator.New()
@@ -65,7 +65,7 @@ type ClientConfig struct {
 	//  false
 	UseHTTPS bool `validate:"-"`
 
-	// BasePath is the base route path for API requests.
+	// BaseEndpoint is the base route path for API requests.
 	//
 	// Note: While this path is fixed by the Space Engineers server, this option
 	// allows customization when routing through a reverse proxy.
@@ -74,7 +74,7 @@ type ClientConfig struct {
 	//
 	// Default:
 	//  ToPtr(DefaultAPIEndpoint)
-	BasePath *string `validate:"-"`
+	BaseEndpoint *string `validate:"-"`
 
 	// HTTPClient allows the use of a custom HTTP client for making requests.
 	//
@@ -99,8 +99,8 @@ func (c *ClientConfig) SetDefaults() {
 	if c.Timeout == 0 {
 		c.Timeout = DefaultTimeout
 	}
-	if c.BasePath == nil {
-		c.BasePath = ToPtr(DefaultBasePath)
+	if c.BaseEndpoint == nil {
+		c.BaseEndpoint = ToPtr(DefaultBaseEndpoint)
 	}
 	if c.HTTPClient == nil {
 		c.HTTPClient = &http.Client{
