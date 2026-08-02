@@ -26,6 +26,7 @@ To ensure quality, all contributions should comply with the following guidelines
 ### 2. Code Quality
 
 - Please follow the Go coding style and conventions.
+- golangci-lint can help you with that. Read more in the [Tools section](#tools) below.
 
 ### 3. Documentation
 
@@ -51,4 +52,5 @@ Document all functions, methods, types, and struct attributes using [GoDoc comme
 The following tools are recommended for development:
 
 - [golangci-lint](https://github.com/golangci/golangci-lint) is a linter for Go. You can manually run it or register it as a pre-push hook like shown in [.githooks/README.md](.githooks/README.md).
+  - `nolint` should be used sparingly and be justified in the PR description.
 - [pkgsite](https://github.com/golang/pkgsite) is a local version of [pkg.go.dev](https://pkg.go.dev/). It allows you to preview the documentation without publishing it.
