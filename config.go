@@ -10,7 +10,7 @@ import (
 // Default configuration values for the VRage Remote API client.
 const (
 	DefaultTimeout     time.Duration = 10 * time.Second
-	DefaultAPIEndpoint string        = "/vrageremote"
+	DefaultBasePath    string        = "/vrageremote"
 	DefaultContentType string        = "application/json"
 	DefaultPort        uint32        = 8080
 )
@@ -33,7 +33,7 @@ type ClientConfig struct {
 	//  "127.0.0.1"
 	//  "example.com"
 	//  "play.cool-server.com"
-	RemoteApiIP string `validate:"required,ip|fqdn"` //nolint:revive
+	RemoteApiIP string `validate:"required,ip|fqdn"` //nolint:revive // so the name is closer to the .cfg file
 
 	// RemoteSecurityKey is the security key used for authenticating API requests.
 	//
@@ -48,7 +48,7 @@ type ClientConfig struct {
 	//
 	// Default:
 	//  8080
-	RemoteApiPort uint32 `validate:"port"` //nolint:revive
+	RemoteApiPort uint32 `validate:"port"` //nolint:revive // so the name is closer to the .cfg file
 
 	// Timeout specifies the maximum duration for an API request before an vrage.ErrRequestTimeout error is returned.
 	//
@@ -65,16 +65,16 @@ type ClientConfig struct {
 	//  false
 	UseHTTPS bool `validate:"-"`
 
-	// APIEndpoint is the base route path for API requests.
+	// BasePath is the base route path for API requests.
 	//
 	// Note: While this path is fixed by the Space Engineers server, this option
 	// allows customization when routing through a reverse proxy.
 	//
-	// Example: "/custompath", "/api/vrageremote", "/", or ""
+	// Example: "/custompath", "/", or ""
 	//
 	// Default:
 	//  ToPtr(DefaultAPIEndpoint)
-	ApiEndpoint *string `validate:"-"` //nolint:revive
+	BasePath *string `validate:"-"`
 
 	// HTTPClient allows the use of a custom HTTP client for making requests.
 	//
@@ -99,8 +99,8 @@ func (c *ClientConfig) SetDefaults() {
 	if c.Timeout == 0 {
 		c.Timeout = DefaultTimeout
 	}
-	if c.ApiEndpoint == nil {
-		c.ApiEndpoint = ToPtr(DefaultAPIEndpoint)
+	if c.BasePath == nil {
+		c.BasePath = ToPtr(DefaultBasePath)
 	}
 	if c.HTTPClient == nil {
 		c.HTTPClient = &http.Client{
