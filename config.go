@@ -11,7 +11,6 @@ import (
 const (
 	DefaultTimeout      time.Duration = 10 * time.Second
 	DefaultBaseEndpoint string        = "/vrageremote"
-	DefaultContentType  string        = "application/json"
 	DefaultPort         uint32        = 8080
 )
 
@@ -20,6 +19,15 @@ var validate = validator.New()
 // ToPtr returns a pointer to the given value.
 func ToPtr[T any](value T) *T {
 	return &value
+}
+
+// FromPtr returns the value of the given pointer or the zero value of T if the pointer is nil.
+func FromPtr[T any](ptr *T) T {
+	if ptr == nil {
+		var zero T
+		return zero
+	}
+	return *ptr
 }
 
 // ClientConfig holds the configuration settings for the VRage Remote API client.
