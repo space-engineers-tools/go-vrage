@@ -11,6 +11,9 @@ type APIServerPingV1Data struct {
 	Result string `json:"result"`
 }
 
+// PingV1 returns a ping response from the server, which can be used to check if the server is reachable and responding.
+//
+//	GET /v1/server/ping
 func (s *apiServer) PingV1() (BaseResponse[APIServerPingV1Data], error) {
 	var responseStruct BaseResponse[APIServerPingV1Data]
 	httpResponse, err := s.http.V1ServerPing()
@@ -43,6 +46,11 @@ type APIServerStatusData struct {
 	WorldName         string  `json:"WorldName"`
 }
 
+// StatusV1 returns the current status of the server
+//
+// This includes information about the game, players, and performance metrics.
+//
+//	GET /v1/server
 func (s *apiServer) StatusV1() (BaseResponse[APIServerStatusData], error) {
 	var responseStruct BaseResponse[APIServerStatusData]
 	httpResponse, err := s.http.V1ServerStatus()
