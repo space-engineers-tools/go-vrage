@@ -11,12 +11,10 @@ type APIServerPingV1Data struct {
 	Result string `json:"result"`
 }
 
-// PingV1 returns a ping response from the server, which can be used to check if the server is reachable and responding.
-//
-//	GET /v1/server/ping
-func (s *APIServer) PingV1() (BaseResponse[APIServerPingV1Data], error) {
+// Ping returns a ping response from the server, which can be used to check if the server is reachable and responding.
+func (s *APIServer) Ping() (BaseResponse[APIServerPingV1Data], error) {
 	var responseStruct BaseResponse[APIServerPingV1Data]
-	httpResponse, err := s.http.V1ServerPing()
+	httpResponse, err := s.http.GetV1ServerPing()
 	if err != nil {
 		return responseStruct, err
 	}
@@ -46,12 +44,10 @@ type APIServerStatusData struct {
 	WorldName         string  `json:"WorldName"`
 }
 
-// StatusV1 returns the current status of the server. This includes information about the performance and the world.
-//
-//	GET /v1/server
-func (s *APIServer) StatusV1() (BaseResponse[APIServerStatusData], error) {
+// Status returns the current status of the server. This includes information about the performance and the world.
+func (s *APIServer) Status() (BaseResponse[APIServerStatusData], error) {
 	var responseStruct BaseResponse[APIServerStatusData]
-	httpResponse, err := s.http.V1ServerStatus()
+	httpResponse, err := s.http.GetV1ServerStatus()
 	if err != nil {
 		return responseStruct, err
 	}
@@ -63,14 +59,3 @@ func (s *APIServer) StatusV1() (BaseResponse[APIServerStatusData], error) {
 
 	return responseStruct, nil
 }
-
-// func (s *APIServer) Status() (JSON, error) {
-// 	return JSON{}, nil
-// }
-
-// region DELETE /v1/server
-
-// // todo: stop
-// func (s *APIServer) Stop() (JSON, error) {
-// 	return JSON{}, nil
-// }

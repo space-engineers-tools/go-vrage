@@ -153,10 +153,35 @@ func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap,
 	return response, nil
 }
 
-func (c *HTTPClient) V1ServerPing() (*http.Response, error) {
+/*
+API routes below.
+
+Naming convention:
+func {Method}{Version}{PathWithoutSlash}
+
+Example:
+func GetV1ServerPing()
+*/
+
+// region /v1/server
+
+// GetV1ServerPing performs a request and returns the HTTP response
+//
+//	GET /v1/server/ping
+func (c *HTTPClient) GetV1ServerPing() (*http.Response, error) {
 	return c.Do(http.MethodGet, "/v1/server/ping", jsonMap(nil), httpHeaders(nil))
 }
 
-func (c *HTTPClient) V1ServerStatus() (*http.Response, error) {
+// GetV1ServerStatus performs a request and returns the HTTP response
+//
+//	GET /v1/server
+func (c *HTTPClient) GetV1ServerStatus() (*http.Response, error) {
 	return c.Do(http.MethodGet, "/v1/server", jsonMap(nil), httpHeaders(nil))
+}
+
+// DeleteV1Server performs a request and returns the HTTP response
+//
+//	DELETE /v1/server
+func (c *HTTPClient) DeleteV1Server() (*http.Response, error) {
+	return c.Do(http.MethodDelete, "/v1/server", jsonMap(nil), httpHeaders(nil))
 }
