@@ -13,7 +13,7 @@ func panicIfError(err error) {
 }
 
 func main() {
-	v, err := vrage.NewClient(vrage.ClientConfig{
+	vrageClient, err := vrage.NewClient(vrage.ClientConfig{
 		UseHTTPS:          false,
 		RemoteApiIP:       "127.0.0.1",
 		RemoteApiPort:     11202,
@@ -21,7 +21,7 @@ func main() {
 	})
 	panicIfError(err)
 
-	ping, err := v.Server.PingV1()
+	ping, err := vrageClient.Server.PingV1()
 	panicIfError(err)
 
 	fmt.Println("The server uses api version:", ping.Meta.APIVersion)
