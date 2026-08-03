@@ -7,19 +7,19 @@ type APIServer struct {
 
 // region GET /v1/server/ping
 
-type APIServerPingV1Data struct {
+type APIServerPingData struct {
 	Result string `json:"result"`
 }
 
 // Ping returns a ping response from the server, which can be used to check if the server is reachable and responding.
-func (s *APIServer) Ping() (BaseResponse[APIServerPingV1Data], error) {
-	var responseStruct BaseResponse[APIServerPingV1Data]
+func (s *APIServer) Ping() (BaseResponse[APIServerPingData], error) {
+	var responseStruct BaseResponse[APIServerPingData]
 	httpResponse, err := s.http.GetV1ServerPing()
 	if err != nil {
 		return responseStruct, err
 	}
 
-	responseStruct, err = parseResponse[APIServerPingV1Data](httpResponse)
+	responseStruct, err = parseResponse[APIServerPingData](httpResponse)
 	if err != nil {
 		return responseStruct, err
 	}

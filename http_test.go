@@ -18,7 +18,7 @@ func TestParseResponseRejectsExtraJSONData(t *testing.T) {
 	body := []byte(`{"data":{"result":"ok"},"meta":{"apiVersion":"v1","queryTime":1.23}}{"extra":true}`)
 	response := &http.Response{Body: io.NopCloser(bytes.NewReader(body))}
 
-	_, err := parseResponse[APIServerPingV1Data](response)
+	_, err := parseResponse[APIServerPingData](response)
 	if err == nil {
 		t.Fatal("expected parseResponse to reject extra JSON data")
 	}
@@ -32,7 +32,7 @@ func TestParseResponseReturnsErrorForHTTPStatusError(t *testing.T) {
 		Body:       io.NopCloser(bytes.NewReader(body)),
 	}
 
-	_, err := parseResponse[APIServerPingV1Data](response)
+	_, err := parseResponse[APIServerPingData](response)
 	if err == nil {
 		t.Fatal("expected parseResponse to return an error for HTTP status errors")
 	}
