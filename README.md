@@ -20,7 +20,7 @@ coming soon
 To install the package to your Go module, run the following command:
 
 ```bash
-go get -u github.com/space-engineers-tools/go-vrage
+go get github.com/space-engineers-tools/go-vrage
 ```
 
 ## Usage
