@@ -14,18 +14,18 @@ var (
 )
 
 // newErrConfigIncomplete creates a new ErrConfigIncomplete.
-func newErrConfigIncomplete(fieldNames ...string) error {
+func newErrConfigIncomplete(fieldNames ...string) error { //nolint:unused // todo
 	joinedFields := strings.Join(fieldNames, ", ")
 	return fmt.Errorf("%w: [%s]", ErrConfigIncomplete, joinedFields)
 }
 
 // newErrConfigInvalid creates a new ErrConfigInvalid.
-func newErrConfigInvalid(fieldName string, reason string) error {
+func newErrConfigInvalid(fieldName string, reason string) error { //nolint:unused // todo
 	return fmt.Errorf("%w: field '%s' is invalid: %s", ErrConfigInvalid, fieldName, reason)
 }
 
 // newErrConfigIncompatible creates a new ErrConfigIncompatible.
-func newErrConfigIncompatible(field1, field2 string, reason string) error {
+func newErrConfigIncompatible(field1, field2 string, reason string) error { //nolint:unused // todo
 	return fmt.Errorf("%w: fields '%s' and '%s' conflict: %s", ErrConfigIncompatible, field1, field2, reason)
 }
 
