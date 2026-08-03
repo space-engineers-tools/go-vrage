@@ -1,5 +1,6 @@
 package vrage
 
+// Client is the main entry point for interacting with the VRage API. It provides access to various API endpoints through its sub-clients.
 type Client struct {
 	Config  ClientConfig
 	HTTP    HTTPClient

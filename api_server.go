@@ -7,6 +7,7 @@ type APIServer struct {
 
 // region GET /v1/server/ping
 
+// APIServerPingData represents the data returned by the GET /v1/server/ping endpoint.
 type APIServerPingData struct {
 	Result string `json:"result"`
 }
@@ -29,15 +30,16 @@ func (s *APIServer) Ping() (BaseResponse[APIServerPingData], error) {
 
 // region GET /v1/server
 
+// APIServerStatusData represents the data returned by the GET /v1/server endpoint.
 type APIServerStatusData struct {
 	Game              string  `json:"Game"`
 	IsReady           bool    `json:"IsReady"`
 	PirateUsedPCU     int     `json:"PirateUsedPCU"`
 	Players           int     `json:"Players"`
-	ServerId          int64   `json:"ServerId"`
+	ServerID          int64   `json:"ServerId"`
 	ServerName        string  `json:"ServerName"`
 	SimSpeed          float64 `json:"SimSpeed"`
-	SimulationCpuLoad float64 `json:"SimulationCpuLoad"`
+	SimulationCPULoad float64 `json:"SimulationCpuLoad"`
 	TotalTime         int     `json:"TotalTime"`
 	UsedPCU           int     `json:"UsedPCU"`
 	Version           string  `json:"Version"`

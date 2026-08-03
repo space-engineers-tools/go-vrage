@@ -117,6 +117,7 @@ func buildURL(config *ClientConfig, endpoint string) string {
 	)
 }
 
+// Do sends an HTTP request to the API with the specified method, endpoint, JSON payload, and headers.
 func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
 	url := buildURL(c.config, endpoint)
 
