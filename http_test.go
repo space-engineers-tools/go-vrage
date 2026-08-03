@@ -6,6 +6,7 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -93,5 +94,10 @@ func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected request to succeed, got %v", err)
 	}
-	defer response.Body.Close()
+
+	defer func() {
+		if err := response.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}()
 }

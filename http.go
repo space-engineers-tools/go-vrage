@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -77,7 +78,11 @@ func buildAuthHeaders(remotesecuritykey string, endpoint string) (dateHeader, au
 func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 	var target BaseResponse[T]
 
-	defer response.Body.Close()
+	defer func() {
+		if err := response.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}()
 
 	// todo: improve error handling for HTTP status codes; map to custom error types
 	if response.StatusCode < http.StatusOK || response.StatusCode >= http.StatusMultipleChoices {
