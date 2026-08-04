@@ -31,6 +31,10 @@ Please check out the [examples](/examples) directory for usage examples.
 
 We welcome contributions! Please read our [contributing guidelines](CONTRIBUTING.md) for details on how to get started.
 
+## Links
+
+- [Maintainer: @space-engineers-tools](https://github.com/space-engineers-tools)
+
 ## Disclaimer
 
 This project is not affiliated with [Keen Software House](https://www.keenswh.com) or the [Space Engineers](https://www.spaceengineersgame.com) game.
