@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// ErrConfig... are errors for configuration validation
+// ErrConfig... are errors for configuration validation.
 var (
 	ErrConfigIncomplete   = errors.New("invalid config: missing required fields")
 	ErrConfigInvalid      = errors.New("invalid config: field validation failed")
@@ -30,7 +30,7 @@ func newErrConfigIncompatible(field1, field2 string, reason string) error { //no
 	return fmt.Errorf("%w: fields '%s' and '%s' conflict: %s", ErrConfigIncompatible, field1, field2, reason)
 }
 
-// ErrAPI... are errors for API request failures
+// ErrAPI... are errors for API request failures.
 var (
 	ErrAPIConnectionFailed   = errors.New("failed to connect to the server: connection refused or host not available")
 	ErrAPIInvalidSecurityKey = errors.New("server returned StatusForbidden: security key is invalid or missing")

@@ -125,7 +125,7 @@ func buildURL(config *ClientConfig, endpoint string) string {
 
 // Do sends an HTTP request to the API with the specified
 // method, endpoint, JSON payload, and headers
-// and returns the pure HTTP response and error without any wrapping
+// and returns the pure HTTP response and error without any wrapping.
 func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
 	url := buildURL(c.config, endpoint)
 
@@ -164,7 +164,7 @@ func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap,
 
 // DoErr sends an HTTP request to the API with the specified
 // method, endpoint, JSON payload, and headers
-// and returns the HTTP response and high level sentinel errors defined in errors.go
+// and returns the HTTP response and high level sentinel errors defined in errors.go.
 func (c *HTTPClient) DoErr(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
 	response, err := c.Do(method, endpoint, jsonPayload, headers)
 	if err != nil {
