@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 )
 
 // ErrConfig... are errors for configuration validation
@@ -31,12 +32,24 @@ func newErrConfigIncompatible(field1, field2 string, reason string) error { //no
 
 // ErrAPI... are errors for API request failures
 var (
-	ErrAPIConnectionFailed   = errors.New("failed to connect to the server: check if the server is running and reachable")
+	ErrAPIConnectionFailed   = errors.New("failed to connect to the server: connection refused or host not available")
 	ErrAPIInvalidSecurityKey = errors.New("server returned StatusForbidden: security key is invalid or missing")
 	ErrAPIRequestTimeout     = errors.New("request timed out: the server did not respond in time")
 	ErrAPIUnexpectedCode     = errors.New("unexpected status code from the server")
 	ErrApiUnexpectedBody     = errors.New("unexpected response body from the server")
 )
+
+func newErrAPIConnectionFailed(err error) error {
+	return fmt.Errorf("%w: %s", ErrAPIConnectionFailed, err.Error())
+}
+
+func newErrAPIInvalidSecurityKey() error {
+	return ErrAPIInvalidSecurityKey
+}
+
+func newErrAPIRequestTimeout(timeout time.Duration) error {
+	return fmt.Errorf("%w: exceeded %s", ErrAPIRequestTimeout, timeout)
+}
 
 func newErrAPIUnexpectedCode(statusCode int, body string) error {
 	return fmt.Errorf("%w: status code %d, body: %s", ErrAPIUnexpectedCode, statusCode, body)

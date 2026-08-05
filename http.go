@@ -1,10 +1,12 @@
 package vrage
 
 import (
+	"context"
 	"crypto/hmac"
 	"crypto/sha1"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -82,7 +84,15 @@ func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 		return target, fmt.Errorf("failed to read response body: %w", err)
 	}
 
+	if response.StatusCode == http.StatusForbidden {
+		return target, newErrAPIInvalidSecurityKey()
+	}
+
 	if !IsResponseSuccessful(response) {
+		statusText := response.Status
+		if statusText == "" {
+			statusText = fmt.Sprintf("%d %s", response.StatusCode, http.StatusText(response.StatusCode))
+		}
 		return target, newErrAPIUnexpectedCode(response.StatusCode, string(bodyBytes))
 	}
 
@@ -117,7 +127,9 @@ func buildURL(config *ClientConfig, endpoint string) string {
 
 // region HTTPClient methods
 
-// Do sends an HTTP request to the API with the specified method, endpoint, JSON payload, and headers.
+// Do sends an HTTP request to the API with the specified
+// method, endpoint, JSON payload, and headers
+// and returns the pure HTTP response and error without any wrapping
 func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
 	url := buildURL(c.config, endpoint)
 
@@ -154,6 +166,22 @@ func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap,
 	return response, nil
 }
 
+// DoErr sends an HTTP request to the API with the specified
+// method, endpoint, JSON payload, and headers
+// and returns the HTTP response and high level sentinel errors defined in errors.go
+func (c *HTTPClient) DoErr(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
+	response, err := c.Do(method, endpoint, jsonPayload, headers)
+	if err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			return nil, newErrAPIRequestTimeout(c.config.Timeout)
+		}
+
+		return nil, newErrAPIConnectionFailed(err)
+	}
+
+	return response, nil
+}
+
 /*
 API routes below.
 
@@ -171,14 +199,14 @@ GET /v1/session/asteroids/{entityId} = func GetV1SessionAsteroidsEntityId(entity
 //
 //	GET /v1/server/ping
 func (c *HTTPClient) GetV1ServerPing() (*http.Response, error) {
-	return c.Do(http.MethodGet, "/v1/server/ping", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodGet, "/v1/server/ping", jsonMap(nil), httpHeaders(nil))
 }
 
 // GetV1ServerStatus fetches the current status of the server and returns the HTTP response.
 //
 //	GET /v1/server
 func (c *HTTPClient) GetV1ServerStatus() (*http.Response, error) {
-	return c.Do(http.MethodGet, "/v1/server", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodGet, "/v1/server", jsonMap(nil), httpHeaders(nil))
 }
 
 // DeleteV1Server stops the server and returns the HTTP response.
@@ -187,7 +215,7 @@ func (c *HTTPClient) GetV1ServerStatus() (*http.Response, error) {
 //
 //	DELETE /v1/server
 func (c *HTTPClient) DeleteV1Server() (*http.Response, error) {
-	return c.Do(http.MethodDelete, "/v1/server", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodDelete, "/v1/server", jsonMap(nil), httpHeaders(nil))
 }
 
 // region /v1/admin

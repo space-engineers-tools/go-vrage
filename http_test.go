@@ -2,9 +2,11 @@ package vrage
 
 import (
 	"bytes"
+	"context"
 	"crypto/hmac"
 	"crypto/sha1"
 	"encoding/base64"
+	"errors"
 	"io"
 	"log"
 	"net/http"
@@ -13,7 +15,14 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 )
+
+type roundTripperFunc func(*http.Request) (*http.Response, error)
+
+func (fn roundTripperFunc) RoundTrip(request *http.Request) (*http.Response, error) {
+	return fn(request)
+}
 
 func TestParseResponseRejectsExtraJSONData(t *testing.T) {
 	body := []byte(`{"data":{"result":"ok"},"meta":{"apiVersion":"v1","queryTime":1.23}}{"extra":true}`)
@@ -37,8 +46,12 @@ func TestParseResponseReturnsErrorForHTTPStatusError(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected parseResponse to return an error for HTTP status errors")
 	}
-	if got, want := err.Error(), "request failed with status 404 Not Found"; got != want {
-		t.Fatalf("expected error %q, got %q", want, got)
+	if !errors.Is(err, ErrAPIUnexpectedCode) {
+		t.Fatalf("expected ErrAPIUnexpectedCode, got %v", err)
+	}
+	// Ensure the error message includes the status code and the response body.
+	if got := err.Error(); !strings.Contains(got, "status code 404") || !strings.Contains(got, "Not Found") {
+		t.Fatalf("expected error to mention status code and body, got %q", got)
 	}
 }
 
@@ -100,4 +113,60 @@ func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
 			log.Printf("failed to close response body: %v", err)
 		}
 	}()
+}
+
+func TestRouteMethodsMapDeadlineExceededToAPIRequestTimeout(t *testing.T) {
+	config := ClientConfig{
+		RemoteApiIP:       "203.0.113.10",
+		RemoteApiPort:     8080,
+		RemoteSecurityKey: "dGVzdA==",
+		Timeout:           123 * time.Millisecond,
+		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
+		HTTPClient: &http.Client{
+			Transport: roundTripperFunc(func(request *http.Request) (*http.Response, error) {
+				return nil, context.DeadlineExceeded
+			}),
+		},
+	}
+	config.SetDefaults()
+
+	client := HTTPClient{config: &config}
+
+	_, err := client.Do(http.MethodGet, "/v1/server/ping", nil, nil)
+	if !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("expected Do to return context deadline exceeded, got %v", err)
+	}
+
+	_, err = client.GetV1ServerPing()
+	if !errors.Is(err, ErrAPIRequestTimeout) {
+		t.Fatalf("expected route method to map deadline exceeded to ErrAPIRequestTimeout, got %v", err)
+	}
+	if got, want := err.Error(), "request timed out: the server did not respond in time: exceeded 123ms"; got != want {
+		t.Fatalf("expected error %q, got %q", want, got)
+	}
+}
+
+func TestRouteMethodsMapTransportErrorsToAPIConnectionFailed(t *testing.T) {
+	config := ClientConfig{
+		RemoteApiIP:       "203.0.113.10",
+		RemoteApiPort:     8080,
+		RemoteSecurityKey: "dGVzdA==",
+		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
+		HTTPClient: &http.Client{
+			Transport: roundTripperFunc(func(request *http.Request) (*http.Response, error) {
+				return nil, errors.New("dial tcp 203.0.113.10:8080: connect: connection refused")
+			}),
+		},
+	}
+	config.SetDefaults()
+
+	client := HTTPClient{config: &config}
+
+	_, err := client.GetV1ServerPing()
+	if !errors.Is(err, ErrAPIConnectionFailed) {
+		t.Fatalf("expected route method to map transport failures to ErrAPIConnectionFailed, got %v", err)
+	}
+	if got := err.Error(); !strings.Contains(got, "failed to connect to the server: connection refused or host not available") || !strings.Contains(got, "connect: connection refused") {
+		t.Fatalf("expected error to include connection-failure context and dial failure, got %q", got)
+	}
 }
