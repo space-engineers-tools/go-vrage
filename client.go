@@ -15,6 +15,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	if err := config.Validate(); err != nil {
 		return nil, err
 	}
+	// todo: use sentinels in errors.go
 
 	httpClient := HTTPClient{config: &config}
 
