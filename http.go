@@ -93,8 +93,8 @@ func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 	}
 
 	target, err = attemptUnmarshal[BaseResponse[T]](bodyBytes)
-	switch err.(type) {
-	case *json.UnmarshalTypeError:
+	var unmarshalTypeErr *json.UnmarshalTypeError
+	if errors.As(err, &unmarshalTypeErr) {
 		return target, newErrAPIUnexpectedBody(string(bodyBytes))
 	}
 	if err != nil {
