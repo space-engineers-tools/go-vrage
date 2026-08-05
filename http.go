@@ -160,7 +160,8 @@ Naming convention:
 func {Method}{Version}{PathWithoutSlash}
 
 Example:
-func GetV1ServerPing()
+GET /v1/api/server/ping = func GetV1ServerPing()
+GET /v1/session/asteroids/{entityId} = func GetV1SessionAsteroidsEntityId(entityId string)
 */
 
 // region /v1/server
