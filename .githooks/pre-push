@@ -1,7 +1,19 @@
 #!/bin/bash
 
-echo [.githooks/pre-push] Running linter
+# exit immediately if a command exits with a non-zero status
+set -e
+
+# colors
+CYAN='\033[0;36m'
+BOLD_GREEN='\033[1;32m'
+RESET='\033[0m'
+
+PREFIX="${CYAN}[.githooks/pre-push]${RESET}"
+
+echo -e "${PREFIX} Running linters..."
 golangci-lint run
 
-echo [.githooks/pre-push] Running tests
+echo -e "${PREFIX} Running tests..."
 go test -v ./...
+
+echo -e "${PREFIX} ${BOLD_GREEN}DONE!${RESET}"
