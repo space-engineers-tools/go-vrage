@@ -2,7 +2,7 @@ module demo
 
 go 1.26.5
 
-require github.com/space-engineers-tools/go-vrage v0.0.14
+require github.com/space-engineers-tools/go-vrage v0.0.16
 
 require (
 	github.com/gabriel-vasile/mimetype v1.4.13 // indirect
