@@ -123,7 +123,7 @@ func TestRouteMethodsMapDeadlineExceededToAPIRequestTimeout(t *testing.T) {
 		Timeout:           123 * time.Millisecond,
 		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
 		HTTPClient: &http.Client{
-			Transport: roundTripperFunc(func(request *http.Request) (*http.Response, error) {
+			Transport: roundTripperFunc(func(_ *http.Request) (*http.Response, error) {
 				return nil, context.DeadlineExceeded
 			}),
 		},
@@ -153,7 +153,7 @@ func TestRouteMethodsMapTransportErrorsToAPIConnectionFailed(t *testing.T) {
 		RemoteSecurityKey: "dGVzdA==",
 		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
 		HTTPClient: &http.Client{
-			Transport: roundTripperFunc(func(request *http.Request) (*http.Response, error) {
+			Transport: roundTripperFunc(func(_ *http.Request) (*http.Response, error) {
 				return nil, errors.New("dial tcp 203.0.113.10:8080: connect: connection refused")
 			}),
 		},

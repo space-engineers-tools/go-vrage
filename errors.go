@@ -36,7 +36,7 @@ var (
 	ErrAPIInvalidSecurityKey = errors.New("server returned StatusForbidden: security key is invalid or missing")
 	ErrAPIRequestTimeout     = errors.New("request timed out: the server did not respond in time")
 	ErrAPIUnexpectedCode     = errors.New("unexpected status code from the server")
-	ErrApiUnexpectedBody     = errors.New("unexpected response body from the server")
+	ErrAPIUnexpectedBody     = errors.New("unexpected response body from the server")
 )
 
 func newErrAPIConnectionFailed(err error) error {
@@ -56,5 +56,5 @@ func newErrAPIUnexpectedCode(statusCode int, body string) error {
 }
 
 func newErrAPIUnexpectedBody(body string) error {
-	return fmt.Errorf("%w: body: %s", ErrApiUnexpectedBody, body)
+	return fmt.Errorf("%w: body: %s", ErrAPIUnexpectedBody, body)
 }

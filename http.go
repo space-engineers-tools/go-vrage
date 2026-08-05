@@ -89,10 +89,6 @@ func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 	}
 
 	if !IsResponseSuccessful(response) {
-		statusText := response.Status
-		if statusText == "" {
-			statusText = fmt.Sprintf("%d %s", response.StatusCode, http.StatusText(response.StatusCode))
-		}
 		return target, newErrAPIUnexpectedCode(response.StatusCode, string(bodyBytes))
 	}
 
