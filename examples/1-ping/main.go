@@ -21,7 +21,7 @@ func main() {
 	})
 	panicIfError(err)
 
-	ping, err := vrageClient.Server.PingV1()
+	ping, err := vrageClient.Server.Ping()
 	panicIfError(err)
 
 	fmt.Println("The server uses api version:", ping.Meta.APIVersion)
