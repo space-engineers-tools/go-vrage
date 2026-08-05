@@ -17,7 +17,7 @@ func main() {
 		UseHTTPS:          false,
 		RemoteApiIP:       "127.0.0.1",
 		RemoteApiPort:     11202,
-		RemoteSecurityKey: "PLEASE USE A STRONG SECURITY KEY",
+		RemoteSecurityKey: "PLEASE USE A STRONG SECURITY KEY AND STORE IT IN A .env FILE",
 	})
 	panicIfError(err)
 
