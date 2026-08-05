@@ -19,7 +19,7 @@ func validConfig() vrage.ClientConfig {
 		RemoteApiIP:       "203.0.113.10",
 		RemoteApiPort:     8080,
 		RemoteSecurityKey: "top-secret",
-		Timeout:           2 * time.Second,
+		Timeout:           time.Second * 2,
 		UseHTTPS:          false,
 		BaseEndpoint:      strPtr("/vrageremote"),
 	}
@@ -82,7 +82,7 @@ func TestClientConfigValidate_InvalidPort(t *testing.T) {
 
 func TestClientConfigValidate_NegativeTimeout(t *testing.T) {
 	cfg := validConfig()
-	cfg.Timeout = -1 * time.Second
+	cfg.Timeout = time.Second * -1
 
 	err := cfg.Validate()
 
