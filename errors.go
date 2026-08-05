@@ -29,11 +29,14 @@ func newErrConfigIncompatible(field1, field2 string, reason string) error { //no
 	return fmt.Errorf("%w: fields '%s' and '%s' conflict: %s", ErrConfigIncompatible, field1, field2, reason)
 }
 
-// todo: errors below are not final. they are just ideas.
-
 // ErrAPI... are errors for API request failures
 var (
 	ErrAPIConnectionFailed   = errors.New("failed to connect to the server: check if the server is running and reachable")
 	ErrAPIInvalidSecurityKey = errors.New("server returned StatusForbidden: security key is invalid or missing")
 	ErrAPIRequestTimeout     = errors.New("request timed out: the server did not respond in time")
+	ErrAPIUnexpectedResponse = errors.New("unexpected response from the server")
 )
+
+func newErrAPIUnexpectedResponse(statusCode int, body string) error {
+	return fmt.Errorf("%w: status code %d, body: %s", ErrAPIUnexpectedResponse, statusCode, body)
+}
