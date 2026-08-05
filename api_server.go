@@ -1,5 +1,7 @@
 package vrage
 
+import "log"
+
 // APIServer provides access to the /v1/server API routes.
 type APIServer struct {
 	http *HTTPClient
@@ -60,4 +62,28 @@ func (s *APIServer) Status() (BaseResponse[APIServerStatusData], error) {
 	}
 
 	return responseStruct, nil
+}
+
+// region DELETE /v1/server
+
+// Stop stops the server. Some hosting providers may restart the server instead of stopping it, depending on their configuration.
+//
+// Use with caution.
+func (s *APIServer) Stop() error {
+	httpResponse, err := s.http.DeleteV1Server()
+
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		if err := httpResponse.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}()
+
+	if httpResponse.StatusCode != 200 {
+		return newErrAPIUnexpectedResponse(httpResponse.StatusCode, "failed to stop server")
+	}
+	return nil
 }

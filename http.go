@@ -30,6 +30,8 @@ type HTTPClient struct {
 	config *ClientConfig
 }
 
+// region Helper functions
+
 func attemptUnmarshal[T any](data []byte) (T, error) {
 	var result T
 	err := json.Unmarshal(data, &result)
@@ -61,6 +63,11 @@ func buildAuthHeaders(remotesecuritykey string, endpoint string) (dateHeader, au
 	return date, nonce + ":" + signature
 }
 
+// IsResponseSuccessful checks if the HTTP response starts with 2.
+func IsResponseSuccessful(resp *http.Response) bool {
+	return resp.StatusCode >= 200 && resp.StatusCode < 300
+}
+
 func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 	var target BaseResponse[T]
 
@@ -70,22 +77,21 @@ func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 		}
 	}()
 
-	// todo: improve error handling for HTTP status codes; map to custom error types
-	if response.StatusCode < http.StatusOK || response.StatusCode >= http.StatusMultipleChoices {
-		if response.Status != "" {
-			return target, fmt.Errorf("request failed with status %s", response.Status)
+	if !IsResponseSuccessful(response) {
+		bodyBytes, err := io.ReadAll(response.Body)
+		if err != nil {
+			return target, newErrAPIUnexpectedResponse(response.StatusCode, string(bodyBytes))
 		}
-		return target, fmt.Errorf("request failed with status %d", response.StatusCode)
-	}
 
-	data, err := io.ReadAll(response.Body)
-	if err != nil {
-		return target, err
-	}
+		data, err := io.ReadAll(response.Body)
+		if err != nil {
+			return target, err
+		}
 
-	target, err = attemptUnmarshal[BaseResponse[T]](data)
-	if err != nil {
-		return target, err
+		target, err = attemptUnmarshal[BaseResponse[T]](data)
+		if err != nil {
+			return target, err
+		}
 	}
 
 	return target, nil
@@ -107,6 +113,8 @@ func buildURL(config *ClientConfig, endpoint string) string {
 		endpoint,
 	)
 }
+
+// region HTTPClient methods
 
 // Do sends an HTTP request to the API with the specified method, endpoint, JSON payload, and headers.
 func (c *HTTPClient) Do(method httpMethod, endpoint string, jsonPayload jsonMap, headers httpHeaders) (*http.Response, error) {
@@ -157,23 +165,31 @@ func GetV1ServerPing()
 
 // region /v1/server
 
-// GetV1ServerPing performs a request and returns the HTTP response
+// GetV1ServerPing fetches a ping response from the server and returns the HTTP response.
 //
 //	GET /v1/server/ping
 func (c *HTTPClient) GetV1ServerPing() (*http.Response, error) {
 	return c.Do(http.MethodGet, "/v1/server/ping", jsonMap(nil), httpHeaders(nil))
 }
 
-// GetV1ServerStatus performs a request and returns the HTTP response
+// GetV1ServerStatus fetches the current status of the server and returns the HTTP response.
 //
 //	GET /v1/server
 func (c *HTTPClient) GetV1ServerStatus() (*http.Response, error) {
 	return c.Do(http.MethodGet, "/v1/server", jsonMap(nil), httpHeaders(nil))
 }
 
-// DeleteV1Server performs a request and returns the HTTP response
+// DeleteV1Server stops the server and returns the HTTP response.
+//
+// returns 200 OK with empty body if the server was successfully stopped
 //
 //	DELETE /v1/server
 func (c *HTTPClient) DeleteV1Server() (*http.Response, error) {
 	return c.Do(http.MethodDelete, "/v1/server", jsonMap(nil), httpHeaders(nil))
 }
+
+// region /v1/admin
+// todo: add methods for /v1/admin endpoints
+
+// region /v1/session
+// todo: add methods for /v1/session endpoints
