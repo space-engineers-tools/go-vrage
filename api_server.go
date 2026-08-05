@@ -83,7 +83,7 @@ func (s *APIServer) Stop() error {
 	}()
 
 	if httpResponse.StatusCode != 200 {
-		return newErrAPIUnexpectedResponse(httpResponse.StatusCode, "failed to stop server")
+		return newErrAPIUnexpectedCode(httpResponse.StatusCode, "failed to stop server")
 	}
 	return nil
 }

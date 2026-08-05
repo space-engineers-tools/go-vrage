@@ -77,21 +77,22 @@ func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 		}
 	}()
 
+	bodyBytes, err := io.ReadAll(response.Body)
+	if err != nil {
+		return target, fmt.Errorf("failed to read response body: %w", err)
+	}
+
 	if !IsResponseSuccessful(response) {
-		bodyBytes, err := io.ReadAll(response.Body)
-		if err != nil {
-			return target, newErrAPIUnexpectedResponse(response.StatusCode, string(bodyBytes))
-		}
+		return target, newErrAPIUnexpectedCode(response.StatusCode, string(bodyBytes))
+	}
 
-		data, err := io.ReadAll(response.Body)
-		if err != nil {
-			return target, err
-		}
-
-		target, err = attemptUnmarshal[BaseResponse[T]](data)
-		if err != nil {
-			return target, err
-		}
+	target, err = attemptUnmarshal[BaseResponse[T]](bodyBytes)
+	switch err.(type) {
+	case *json.UnmarshalTypeError:
+		return target, newErrAPIUnexpectedBody(string(bodyBytes))
+	}
+	if err != nil {
+		return target, err
 	}
 
 	return target, nil
