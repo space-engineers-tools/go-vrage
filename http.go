@@ -25,24 +25,10 @@ type jsonMap = map[string]any
 // httpHeaders represents HTTP headers to be sent with the request.
 type httpHeaders = map[string]string
 
-// todo: HTTPClient is not responsible for parsing the response body to structs.
-// todo: HTTPClient sends requests and returns the response body as a map and error.
-// todo: parsing the responses should be done by in the Client methods.
-
 // HTTPClient handles all HTTP requests.
 type HTTPClient struct {
 	config *ClientConfig
 }
-
-// todo HTTPClient needs methods:
-// .Do()
-// handle the space engineers hmac processing
-// .SendRequest(method Method, path string, json, headers) (map[string]any, error)
-
-// buildAuthHeaders creates VRage custom auth headers.
-// Signature payload format:
-//
-//	"{endpoint}\r\n{nonce}\r\n{date}\r\n"
 
 func attemptUnmarshal[T any](data []byte) (T, error) {
 	var result T
