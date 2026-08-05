@@ -32,7 +32,8 @@ We welcome contributions! Please read our [contributing guidelines](CONTRIBUTING
 
 ## Links
 
-- [Maintainer: @space-engineers-tools](https://github.com/space-engineers-tools)
+- [Usage Examples](/examples)
+- [Space Engineers Dedicated Servers Docs](https://www.spaceengineersgame.com/dedicated-servers)
 
 ## Disclaimer
 
