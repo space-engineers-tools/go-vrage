@@ -9,7 +9,7 @@ import (
 
 // Default configuration values for the VRage Remote API client.
 const (
-	DefaultTimeout      time.Duration = 10 * time.Second
+	DefaultTimeout      time.Duration = 5 * time.Second
 	DefaultBaseEndpoint string        = "/vrageremote"
 	DefaultPort         uint32        = 8080
 )
