@@ -10,18 +10,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func strPtr(s string) *string {
-	return &s
-}
-
 func validConfig() vrage.ClientConfig {
+	baseEndpoint := "/vrageremote"
 	return vrage.ClientConfig{
 		RemoteApiIP:       "203.0.113.10",
 		RemoteApiPort:     8080,
 		RemoteSecurityKey: "top-secret",
 		Timeout:           time.Second * 2,
 		UseHTTPS:          false,
-		BaseEndpoint:      strPtr("/vrageremote"),
+		BaseEndpoint:      &baseEndpoint,
 	}
 }
 
@@ -101,7 +98,7 @@ func TestClientConfigValidate_EndpointCanBeNilOrEmpty(t *testing.T) {
 	err := cfg.Validate()
 	assert.NoError(t, err)
 
-	cfg.BaseEndpoint = strPtr("")
+	cfg.BaseEndpoint = new(string)
 	err = cfg.Validate()
 	assert.NoError(t, err)
 }

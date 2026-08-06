@@ -7,6 +7,7 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -17,6 +18,10 @@ import (
 	"testing"
 	"time"
 )
+
+const testSecurityKey = "dGVzdA=="
+
+var errDialTCPConnectionRefused = errors.New("connection refused")
 
 type roundTripperFunc func(*http.Request) (*http.Response, error)
 
@@ -67,7 +72,7 @@ func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
 		date := r.Header.Get("Date")
 		payload := "/vrageremote/v1/server/ping\r\n" + nonce + "\r\n" + date + "\r\n"
 
-		key, err := base64.StdEncoding.DecodeString("dGVzdA==")
+		key, err := base64.StdEncoding.DecodeString(testSecurityKey)
 		if err != nil {
 			t.Fatalf("decode test key: %v", err)
 		}
@@ -96,7 +101,7 @@ func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
 	config := ClientConfig{
 		RemoteApiIP:       u.Hostname(),
 		RemoteApiPort:     uint32(port),
-		RemoteSecurityKey: "dGVzdA==",
+		RemoteSecurityKey: testSecurityKey,
 		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
 		HTTPClient:        server.Client(),
 	}
@@ -108,18 +113,16 @@ func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
 		t.Fatalf("expected request to succeed, got %v", err)
 	}
 
-	defer func() {
-		if err := response.Body.Close(); err != nil {
-			log.Printf("failed to close response body: %v", err)
-		}
-	}()
+	if err := response.Body.Close(); err != nil {
+		log.Printf("failed to close response body: %v", err)
+	}
 }
 
 func TestRouteMethodsMapDeadlineExceededToAPIRequestTimeout(t *testing.T) {
 	config := ClientConfig{
 		RemoteApiIP:       "203.0.113.10",
 		RemoteApiPort:     8080,
-		RemoteSecurityKey: "dGVzdA==",
+		RemoteSecurityKey: testSecurityKey,
 		Timeout:           123 * time.Millisecond,
 		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
 		HTTPClient: &http.Client{
@@ -132,12 +135,25 @@ func TestRouteMethodsMapDeadlineExceededToAPIRequestTimeout(t *testing.T) {
 
 	client := HTTPClient{config: &config}
 
-	_, err := client.Do(http.MethodGet, "/v1/server/ping", nil, nil)
+	response, err := client.Do(http.MethodGet, "/v1/server/ping", nil, nil)
 	if !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatalf("expected Do to return context deadline exceeded, got %v", err)
 	}
+	if response != nil {
+		if err := response.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}
 
-	_, err = client.GetV1ServerPing()
+	response, err = client.GetV1ServerPing()
+	if err == nil {
+		t.Fatal("expected route method to return an error")
+	}
+	if response != nil {
+		if err := response.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}
 	if !errors.Is(err, ErrAPIRequestTimeout) {
 		t.Fatalf("expected route method to map deadline exceeded to ErrAPIRequestTimeout, got %v", err)
 	}
@@ -150,11 +166,11 @@ func TestRouteMethodsMapTransportErrorsToAPIConnectionFailed(t *testing.T) {
 	config := ClientConfig{
 		RemoteApiIP:       "203.0.113.10",
 		RemoteApiPort:     8080,
-		RemoteSecurityKey: "dGVzdA==",
+		RemoteSecurityKey: testSecurityKey,
 		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
 		HTTPClient: &http.Client{
 			Transport: roundTripperFunc(func(_ *http.Request) (*http.Response, error) {
-				return nil, errors.New("dial tcp 203.0.113.10:8080: connect: connection refused")
+				return nil, fmt.Errorf("dial tcp 203.0.113.10:8080: connect: %w", errDialTCPConnectionRefused)
 			}),
 		},
 	}
@@ -162,11 +178,18 @@ func TestRouteMethodsMapTransportErrorsToAPIConnectionFailed(t *testing.T) {
 
 	client := HTTPClient{config: &config}
 
-	_, err := client.GetV1ServerPing()
+	response, err := client.GetV1ServerPing()
+	if response != nil {
+		if err := response.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}
 	if !errors.Is(err, ErrAPIConnectionFailed) {
 		t.Fatalf("expected route method to map transport failures to ErrAPIConnectionFailed, got %v", err)
 	}
-	if got := err.Error(); !strings.Contains(got, "failed to connect to the server: connection refused or host not available") || !strings.Contains(got, "connect: connection refused") {
+	if got := err.Error(); !strings.Contains(
+		got, "failed to connect to the server: connection refused or host not available") ||
+		!strings.Contains(got, "connect: connection refused") {
 		t.Fatalf("expected error to include connection-failure context and dial failure, got %q", got)
 	}
 }
