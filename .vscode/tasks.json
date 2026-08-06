@@ -4,13 +4,6 @@
         {
             "label": ".githooks/pre-push",
             "command": "./.githooks/pre-push"
-        },
-        {
-            "label": "golangci-lint run",
-            "command": "golangci-lint",
-            "args": [
-                "run"
-            ]
         }
     ]
 }
