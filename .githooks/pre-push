@@ -3,12 +3,11 @@
 # exit immediately if a command exits with a non-zero status
 set -e
 
-# colors
-CYAN='\033[0;36m'
-BOLD_GREEN='\033[1;32m'
-RESET='\033[0m'
-
-PREFIX="${CYAN}[.githooks/pre-push]${RESET}"
+# define constants
+readonly CYAN='\033[0;36m'
+readonly BOLD_GREEN='\033[1;32m'
+readonly RESET='\033[0m'
+readonly PREFIX="${CYAN}[.githooks/pre-push]${RESET}"
 
 echo -e "${PREFIX} Running linters..."
 golangci-lint run
