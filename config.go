@@ -14,11 +14,14 @@ const (
 	DefaultPort         uint32        = 8080
 )
 
-var validate = validator.New()
+// validate is a shared instance of the Validate.
+var validate = validator.New() //nolint:gochecknoglobals
 
 // toPtr returns a pointer to the given value.
 func toPtr[T any](value T) *T {
-	return &value
+	ptr := new(T)
+	*ptr = value
+	return ptr
 }
 
 // fromPtr returns the value of the given pointer or the zero value of T if the pointer is nil.

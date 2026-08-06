@@ -21,6 +21,11 @@ func (s *APIServer) Ping() (BaseResponse[APIServerPingData], error) {
 	if err != nil {
 		return responseStruct, err
 	}
+	defer func() {
+		if err := httpResponse.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}()
 
 	responseStruct, err = parseResponse[APIServerPingData](httpResponse)
 	if err != nil {
@@ -55,6 +60,11 @@ func (s *APIServer) Status() (BaseResponse[APIServerStatusData], error) {
 	if err != nil {
 		return responseStruct, err
 	}
+	defer func() {
+		if err := httpResponse.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}()
 
 	responseStruct, err = parseResponse[APIServerStatusData](httpResponse)
 	if err != nil {
@@ -66,15 +76,20 @@ func (s *APIServer) Status() (BaseResponse[APIServerStatusData], error) {
 
 // region DELETE /v1/server
 
-// Stop stops the server. Some hosting providers may restart the server instead of stopping it, depending on their configuration.
+// Stop stops the server.
+// Some hosting providers may restart the server instead of stopping it, depending on their configuration.
 //
 // Use with caution.
 func (s *APIServer) Stop() error {
 	httpResponse, err := s.http.DeleteV1Server()
-
 	if err != nil {
 		return err
 	}
+	defer func() {
+		if err := httpResponse.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}()
 
 	defer func() {
 		if err := httpResponse.Body.Close(); err != nil {
