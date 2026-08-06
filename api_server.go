@@ -91,12 +91,6 @@ func (s *APIServer) Stop() error {
 		}
 	}()
 
-	defer func() {
-		if err := httpResponse.Body.Close(); err != nil {
-			log.Printf("failed to close response body: %v", err)
-		}
-	}()
-
 	if httpResponse.StatusCode != 200 {
 		return newErrAPIUnexpectedCode(httpResponse.StatusCode, "failed to stop server")
 	}
