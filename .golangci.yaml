@@ -28,3 +28,7 @@ linters:
     - exhaustive
     - funlen
     - reassign
+    - prealloc
+    - unparam
+    - varnamelen
+    - makezero

@@ -61,15 +61,15 @@ func TestParseResponseReturnsErrorForHTTPStatusError(t *testing.T) {
 }
 
 func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		auth := r.Header.Get("Authorization")
+	server := httptest.NewServer(http.HandlerFunc(func(resWriter http.ResponseWriter, req *http.Request) {
+		auth := req.Header.Get("Authorization")
 		parts := strings.SplitN(auth, ":", 2)
 		if len(parts) != 2 {
 			t.Fatalf("expected authorization header to contain nonce and signature, got %q", auth)
 		}
 
 		nonce, signature := parts[0], parts[1]
-		date := r.Header.Get("Date")
+		date := req.Header.Get("Date")
 		payload := "/vrageremote/v1/server/ping\r\n" + nonce + "\r\n" + date + "\r\n"
 
 		key, err := base64.StdEncoding.DecodeString(testSecurityKey)
@@ -84,22 +84,22 @@ func TestDoUsesBaseEndpointForAuthHeaders(t *testing.T) {
 			t.Fatalf("expected signature %q for payload %q, got %q", expectedSignature, payload, signature)
 		}
 
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(`{"data":{"result":"ok"},"meta":{"apiVersion":"v1","queryTime":1.23}}`))
+		resWriter.WriteHeader(http.StatusOK)
+		_, _ = resWriter.Write([]byte(`{"data":{"result":"ok"},"meta":{"apiVersion":"v1","queryTime":1.23}}`))
 	}))
 	defer server.Close()
 
-	u, err := url.Parse(server.URL)
+	parsedURL, err := url.Parse(server.URL)
 	if err != nil {
 		t.Fatalf("parse server URL: %v", err)
 	}
-	port, err := strconv.Atoi(u.Port())
+	port, err := strconv.Atoi(parsedURL.Port())
 	if err != nil {
 		t.Fatalf("parse server port: %v", err)
 	}
 
 	config := ClientConfig{
-		RemoteApiIP:       u.Hostname(),
+		RemoteApiIP:       parsedURL.Hostname(),
 		RemoteApiPort:     uint32(port),
 		RemoteSecurityKey: testSecurityKey,
 		BaseEndpoint:      toPtr(DefaultBaseEndpoint),
