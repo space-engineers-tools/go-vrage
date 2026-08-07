@@ -1,6 +1,9 @@
 package vrage
 
-import "log"
+import (
+	"log"
+	"net/http"
+)
 
 // APIServer provides access to the /v1/server API routes.
 type APIServer struct {
@@ -91,7 +94,7 @@ func (s *APIServer) Stop() error {
 		}
 	}()
 
-	if httpResponse.StatusCode != 200 {
+	if httpResponse.StatusCode != http.StatusOK {
 		return newErrAPIUnexpectedCode(httpResponse.StatusCode, "failed to stop server")
 	}
 	return nil
