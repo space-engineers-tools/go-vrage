@@ -5,7 +5,7 @@
 [![go reference](https://pkg.go.dev/badge/github.com/space-engineers-tools/go-vrage.svg)](https://pkg.go.dev/github.com/space-engineers-tools/go-vrage)
 [![GitHub](https://img.shields.io/badge/GitHub-5c5c5c?&logo=github&logoColor=white)](https://github.com/space-engineers-tools/go-vrage)
 
-It can be used to programmatically manage and monitor [Dedicated Servers](https://www.spaceengineersgame.com/dedicated-servers), including retrieving server status, managing players, and executing server commands.
+**go-vrage** is a Go client for the VRage Remote API, which is used by Space Engineers 1 [Dedicated Servers](https://www.spaceengineersgame.com/dedicated-servers) to expose server management functionality over HTTP.
 
 > [!WARNING]
 > This project is in an early development stage. **Breaking changes** may be introduced without prior notice. Use in production environments is strongly **discouraged**. When the first stable release is published, this notice will be removed.
