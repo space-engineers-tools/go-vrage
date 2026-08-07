@@ -54,4 +54,3 @@ The following tools are recommended for development:
 - [golangci-lint](https://github.com/golangci/golangci-lint) is a linter for Go. You can manually run it or register it as a pre-push hook like shown in [.githooks/README.md](.githooks/README.md).
   - `nolint` should be used sparingly and be justified in the PR description. You can check existing `nolint` comments in the codebase for examples.
 - [pkgsite](https://github.com/golang/pkgsite) is a local version of [pkg.go.dev](https://pkg.go.dev/). It allows you to preview the documentation without publishing it.
-- [golangci-lint-init](https://github.com/EchterTimo/golangci-lint-init) is a script that automatically creates a `.golangci.yaml` file with the default linters explicitly listed under `linters.enable` and disabled linters explicitly listed under `linters.disable`. This allows you to move an disabled linter to the enabled list without having to search for it in the documentation.
