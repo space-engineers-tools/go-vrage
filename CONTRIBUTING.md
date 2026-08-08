@@ -1,6 +1,6 @@
 # Contribution
 
-Hi there! <img src="https://raw.githubusercontent.com/EchterTimo/EchterTimo/refs/heads/main/images/wave.gif" width="20px" height="20px">
+Hi there! <img src="/assets/wave.gif" width="20px" height="20px">
 
 Thank you for your interest in contributing to this project!
 We appreciate all contributions, whether it is fixing a typo, improving documentation, or adding a new feature.
