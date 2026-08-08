@@ -143,7 +143,7 @@ func (c *HTTPClient) Do(
 	if jsonPayload != nil {
 		payloadBytes, err := json.Marshal(jsonPayload)
 		if err != nil {
-			return nil, fmt.Errorf("failed to marshal JSON payload: %w", err) // todo: add sentinel
+			return nil, newErrAPIUnexpectedBody(fmt.Sprintf("failed to marshal JSON payload: %v", err))
 		}
 		request.Body = io.NopCloser(strings.NewReader(string(payloadBytes)))
 		request.Header.Set("Content-Type", "application/json")
