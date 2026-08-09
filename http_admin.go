@@ -45,4 +45,24 @@ func (c *HTTPClient) DeleteV1AdminBannedPlayersSteamID(steamID uint64) (*http.Re
 }
 
 // region /v1/admin/kickedPlayers
-// todo: v1/admin/kickedPlayers endpoints
+
+// GetV1AdminKickedPlayers fetches a list of kicked players and returns the HTTP response.
+//
+//	GET /v1/admin/kickedPlayers
+func (c *HTTPClient) GetV1AdminKickedPlayers() (*http.Response, error) {
+	return c.DoErr(http.MethodGet, "/v1/admin/kickedPlayers", jsonMap(nil), httpHeaders(nil))
+}
+
+// PostV1AdminKickedPlayersSteamID kicks a player with the specified Steam ID and returns the HTTP response.
+//
+//	POST /v1/admin/kickedPlayers/{steam_id}
+func (c *HTTPClient) PostV1AdminKickedPlayersSteamID(steamID uint64) (*http.Response, error) {
+	return c.DoErr(http.MethodPost, fmt.Sprintf("/v1/admin/kickedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+}
+
+// DeleteV1AdminKickedPlayersSteamID un-kicks a player with the specified Steam ID and returns the HTTP response.
+//
+//	DELETE /v1/admin/kickedPlayers/{steam_id}
+func (c *HTTPClient) DeleteV1AdminKickedPlayersSteamID(steamID uint64) (*http.Response, error) {
+	return c.DoErr(http.MethodDelete, fmt.Sprintf("/v1/admin/kickedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+}

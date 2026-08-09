@@ -19,7 +19,7 @@
 | Root Endpoint | Coverage                                                        |
 | ------------- | --------------------------------------------------------------- |
 | /v1/server    | ![100%](https://img.shields.io/badge/3%2F3-100%25-brightgreen)  |
-| /v1/admin     | ![62.5%](https://img.shields.io/badge/5%2F8-62.5%25-orange)     |
+| /v1/admin     | ![100%](https://img.shields.io/badge/8%2F8-100%25-brightgreen)  |
 | /v1/session   | ![0%](https://img.shields.io/badge/0%2F16-0%25-red)             |
 
 <details>
