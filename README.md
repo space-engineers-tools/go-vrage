@@ -12,7 +12,11 @@
 
 ## Features
 
-coming soon
+- Built-in VRage request authentication (nonce + HMAC-SHA1 signature).
+- Flexible usage styles:
+  - High-level typed clients via `Client.Server`, `Client.Session`, `Client.Admin`.
+  - Low-level response access via `HTTPClient` methods (like `HTTPClient.GetV1ServerPing`) when you need more control.
+- Sentinel error types for better error handling.
 
 ## API Coverage
 
