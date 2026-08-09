@@ -10,6 +10,10 @@
 > [!WARNING]
 > This project is in an early development stage. **Breaking changes** may be introduced without prior notice. Use in production environments is strongly **discouraged**. When the first stable release is published, this notice will be removed.
 
+## Compatibility with Space Engineers
+
+[![](https://img.shields.io/date/1786108278?&label=Hotfix+1.210.013)](https://steamdb.info/patchnotes/24434045/)
+
 ## API Coverage
 
 |Root Endpoint|Coverage|
