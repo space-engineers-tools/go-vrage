@@ -10,14 +10,6 @@
 > [!WARNING]
 > This project is in an early development stage. **Breaking changes** may be introduced without prior notice. Use in production environments is strongly **discouraged**. When the first stable release is published, this notice will be removed.
 
-## Features
-
-- Built-in VRage request authentication (nonce + HMAC-SHA1 signature).
-- Flexible usage styles:
-  - High-level typed clients via `Client.Server`, `Client.Session`, `Client.Admin`.
-  - Low-level response access via `HTTPClient` methods (like `HTTPClient.GetV1ServerPing`) when you need more control.
-- Sentinel error types for better error handling.
-
 ## API Coverage
 
 |Endpoint|Coverage|
@@ -25,6 +17,14 @@
 |`/v1/server`|![](https://img.shields.io/badge/3%2F3-100%25-brightgreen)|
 |`/v1/admin`|![](https://img.shields.io/badge/0%2F8-0%25-red)|
 |`/v1/session`|![](https://img.shields.io/badge/0%2F16-0%25-red)|
+
+## Features
+
+- Built-in VRage request authentication (nonce + HMAC-SHA1 signature).
+- Flexible usage styles:
+  - High-level typed clients via `Client.Server`, `Client.Session`, `Client.Admin`.
+  - Low-level response access via `HTTPClient` methods (like `HTTPClient.GetV1ServerPing`) when you need more control.
+- Sentinel error types for better error handling.
 
 ## Installation
 
