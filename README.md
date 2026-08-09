@@ -14,6 +14,14 @@
 
 coming soon
 
+## API Coverage
+
+|Endpoint|Status|
+|--------|------|
+|`/v1/server`|![](https://img.shields.io/badge/-100%-brightgreen)|
+|`/v1/admin`|![](https://img.shields.io/badge/-0%-red)|
+|`/v1/session`|![](https://img.shields.io/badge/-0%-red)|
+
 ## Installation
 
 To install the package to your Go module, run the following command:
