@@ -1,13 +1,18 @@
 package vrage
 
-// BaseResponse represents the base response structure of the API.
-type BaseResponse[T any] struct {
-	Data T    `json:"data"`
-	Meta Meta `json:"meta"`
+// APIResponseWithData represents an API with a data field.
+type APIResponseWithData[T any] struct {
+	Data T       `json:"data"`
+	Meta APIMeta `json:"meta"`
 }
 
-// Meta represents the metadata of the API response.
-type Meta struct {
+// APIResponseWithoutData represents an API response without a data field.
+type APIResponseWithoutData struct {
+	Meta APIMeta `json:"meta"`
+}
+
+// APIMeta represents the metadata of the API response.
+type APIMeta struct {
 	// APIVersion is the version of the API.
 	APIVersion string `json:"apiVersion"`
 	// QueryTime is the time taken (in seconds) to process the request.

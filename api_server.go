@@ -2,7 +2,6 @@ package vrage
 
 import (
 	"log"
-	"net/http"
 )
 
 // APIServer provides access to the /v1/server API routes.
@@ -18,8 +17,8 @@ type APIServerPingData struct {
 }
 
 // Ping returns a ping response from the server, which can be used to check if the server is reachable and responding.
-func (s *APIServer) Ping() (BaseResponse[APIServerPingData], error) {
-	var responseStruct BaseResponse[APIServerPingData]
+func (s *APIServer) Ping() (APIResponseWithData[APIServerPingData], error) {
+	var responseStruct APIResponseWithData[APIServerPingData]
 	httpResponse, err := s.http.GetV1ServerPing()
 	if err != nil {
 		return responseStruct, err
@@ -30,7 +29,7 @@ func (s *APIServer) Ping() (BaseResponse[APIServerPingData], error) {
 		}
 	}()
 
-	responseStruct, err = parseResponse[APIServerPingData](httpResponse)
+	responseStruct, err = parseResponse[APIResponseWithData[APIServerPingData]](httpResponse)
 	if err != nil {
 		return responseStruct, err
 	}
@@ -57,8 +56,8 @@ type APIServerStatusData struct {
 }
 
 // Status returns the current status of the server. This includes information about the performance and the world.
-func (s *APIServer) Status() (BaseResponse[APIServerStatusData], error) {
-	var responseStruct BaseResponse[APIServerStatusData]
+func (s *APIServer) Status() (APIResponseWithData[APIServerStatusData], error) {
+	var responseStruct APIResponseWithData[APIServerStatusData]
 	httpResponse, err := s.http.GetV1ServerStatus()
 	if err != nil {
 		return responseStruct, err
@@ -69,7 +68,7 @@ func (s *APIServer) Status() (BaseResponse[APIServerStatusData], error) {
 		}
 	}()
 
-	responseStruct, err = parseResponse[APIServerStatusData](httpResponse)
+	responseStruct, err = parseResponse[APIResponseWithData[APIServerStatusData]](httpResponse)
 	if err != nil {
 		return responseStruct, err
 	}
@@ -83,10 +82,11 @@ func (s *APIServer) Status() (BaseResponse[APIServerStatusData], error) {
 // Some hosting providers may restart the server instead of stopping it, depending on their configuration.
 //
 // Use with caution.
-func (s *APIServer) Stop() error {
+func (s *APIServer) Stop() (APIResponseWithoutData, error) {
+	var responseStruct APIResponseWithoutData
 	httpResponse, err := s.http.DeleteV1Server()
 	if err != nil {
-		return err
+		return responseStruct, err
 	}
 	defer func() {
 		if err := httpResponse.Body.Close(); err != nil {
@@ -94,8 +94,9 @@ func (s *APIServer) Stop() error {
 		}
 	}()
 
-	if httpResponse.StatusCode != http.StatusOK {
-		return newErrAPIUnexpectedCode(httpResponse.StatusCode, "failed to stop server")
+	responseStruct, err = parseResponse[APIResponseWithoutData](httpResponse)
+	if err != nil {
+		return responseStruct, err
 	}
-	return nil
+	return responseStruct, nil
 }

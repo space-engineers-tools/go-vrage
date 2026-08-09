@@ -70,8 +70,9 @@ func IsResponseSuccessful(resp *http.Response) bool {
 	return resp.StatusCode >= 200 && resp.StatusCode < 300
 }
 
-func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
-	var target BaseResponse[T]
+// parseResponse parses the HTTP response and returns the API response structure or an error.
+func parseResponse[T any](response *http.Response) (T, error) {
+	var target T
 
 	defer func() {
 		if err := response.Body.Close(); err != nil {
@@ -92,7 +93,7 @@ func parseResponse[T any](response *http.Response) (BaseResponse[T], error) {
 		return target, newErrAPIUnexpectedCode(response.StatusCode, string(bodyBytes))
 	}
 
-	target, err = attemptUnmarshal[BaseResponse[T]](bodyBytes)
+	target, err = attemptUnmarshal[T](bodyBytes)
 	var unmarshalTypeErr *json.UnmarshalTypeError
 	if errors.As(err, &unmarshalTypeErr) {
 		return target, newErrAPIUnexpectedBody(string(bodyBytes))
