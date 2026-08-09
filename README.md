@@ -18,9 +18,9 @@ coming soon
 
 |Endpoint|Status|
 |--------|------|
-|`/v1/server`|![](https://img.shields.io/badge/-100%-brightgreen)|
-|`/v1/admin`|![](https://img.shields.io/badge/-0%-red)|
-|`/v1/session`|![](https://img.shields.io/badge/-0%-red)|
+|`/v1/server`|![](https://img.shields.io/badge/100%25-brightgreen)|
+|`/v1/admin`|![](https://img.shields.io/badge/0%25-red)|
+|`/v1/session`|![](https://img.shields.io/badge/0%25-red)|
 
 ## Installation
 
