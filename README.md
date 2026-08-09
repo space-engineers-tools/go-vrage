@@ -20,11 +20,11 @@
 
 ## API Coverage
 
-|Endpoint|Status|
+|Endpoint|Coverage|
 |--------|------|
-|`/v1/server`|![](https://img.shields.io/badge/100%25-brightgreen)|
-|`/v1/admin`|![](https://img.shields.io/badge/0%25-red)|
-|`/v1/session`|![](https://img.shields.io/badge/0%25-red)|
+|`/v1/server`|![](https://img.shields.io/badge/3%2F3-100%25-brightgreen)|
+|`/v1/admin`|![](https://img.shields.io/badge/0%2F8-0%25-red)|
+|`/v1/session`|![](https://img.shields.io/badge/0%2F16-0%25-red)|
 
 ## Installation
 
