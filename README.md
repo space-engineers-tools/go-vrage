@@ -12,7 +12,7 @@
 
 ## API Coverage
 
-|Endpoint|Coverage|
+|Root Endpoint|Coverage|
 |--------|------|
 |`/v1/server`|![](https://img.shields.io/badge/3%2F3-100%25-brightgreen)|
 |`/v1/admin`|![](https://img.shields.io/badge/0%2F8-0%25-red)|
