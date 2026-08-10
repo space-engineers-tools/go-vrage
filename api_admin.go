@@ -1,6 +1,9 @@
 package vrage
 
-import "log"
+import (
+	"log"
+	"time"
+)
 
 // APIAdmin provides access to the /v1/admin API routes.
 type APIAdmin struct {
@@ -142,6 +145,13 @@ type APIAdminKickedPlayer struct {
 // CanJoin returns true if the player is allowed to join again (Time <= 0).
 func (p APIAdminKickedPlayer) CanJoin() bool {
 	return p.Time <= 0
+}
+
+func (p APIAdminKickedPlayer) TimeRemaining() time.Duration {
+	if p.CanJoin() {
+		return 0
+	}
+	return time.Duration(p.Time) * time.Millisecond
 }
 
 // APIAdminKickedPlayersData represents the data returned by the GET /v1/admin/kickedPlayers endpoint.
