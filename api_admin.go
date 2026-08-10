@@ -147,6 +147,8 @@ func (p APIAdminKickedPlayer) CanJoin() bool {
 	return p.Time <= 0
 }
 
+// TimeRemaining returns the remaining kick duration as a time.Duration.
+// If the player is allowed to join again, it returns 0.
 func (p APIAdminKickedPlayer) TimeRemaining() time.Duration {
 	if p.CanJoin() {
 		return 0
