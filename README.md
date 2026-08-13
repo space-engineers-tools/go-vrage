@@ -12,7 +12,7 @@
 
 ## Compatibility with Space Engineers
 
-[![Hotfix 1.210.013](https://img.shields.io/date/1786108278?&label=Hotfix+1.210.013)](https://steamdb.info/patchnotes/24434045/)
+[![Hotfix 1.210.013](https://img.shields.io/date/1786108278?&label=Hotfix+1.210.013&logo=steam)](https://steamdb.info/patchnotes/24434045/)
 
 ## API Coverage
 
