@@ -11,14 +11,14 @@ import (
 //
 //	POST /v1/admin/promotedPlayers/{steam_id}
 func (c *HTTPClient) PostV1AdminPromotedPlayersSteamID(steamID uint64) (*http.Response, error) {
-	return c.DoErr(http.MethodPost, fmt.Sprintf("/v1/admin/promotedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodPost, fmt.Sprintf("/v1/admin/promotedPlayers/%d", steamID), nil, httpHeaders(nil))
 }
 
 // DeleteV1AdminPromotedPlayersSteamID demotes a player with the specified Steam ID and returns the HTTP response.
 //
 //	DELETE /v1/admin/promotedPlayers/{steam_id}
 func (c *HTTPClient) DeleteV1AdminPromotedPlayersSteamID(steamID uint64) (*http.Response, error) {
-	return c.DoErr(http.MethodDelete, fmt.Sprintf("/v1/admin/promotedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodDelete, fmt.Sprintf("/v1/admin/promotedPlayers/%d", steamID), nil, httpHeaders(nil))
 }
 
 // region /v1/admin/bannedPlayers
@@ -27,21 +27,21 @@ func (c *HTTPClient) DeleteV1AdminPromotedPlayersSteamID(steamID uint64) (*http.
 //
 //	GET /v1/admin/bannedPlayers
 func (c *HTTPClient) GetV1AdminBannedPlayers() (*http.Response, error) {
-	return c.DoErr(http.MethodGet, "/v1/admin/bannedPlayers", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodGet, "/v1/admin/bannedPlayers", nil, httpHeaders(nil))
 }
 
 // PostV1AdminBannedPlayersSteamID bans a player with the specified Steam ID and returns the HTTP response.
 //
 //	POST /v1/admin/bannedPlayers/{steam_id}
 func (c *HTTPClient) PostV1AdminBannedPlayersSteamID(steamID uint64) (*http.Response, error) {
-	return c.DoErr(http.MethodPost, fmt.Sprintf("/v1/admin/bannedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodPost, fmt.Sprintf("/v1/admin/bannedPlayers/%d", steamID), nil, httpHeaders(nil))
 }
 
 // DeleteV1AdminBannedPlayersSteamID unbans a player with the specified Steam ID and returns the HTTP response.
 //
 //	DELETE /v1/admin/bannedPlayers/{steam_id}
 func (c *HTTPClient) DeleteV1AdminBannedPlayersSteamID(steamID uint64) (*http.Response, error) {
-	return c.DoErr(http.MethodDelete, fmt.Sprintf("/v1/admin/bannedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodDelete, fmt.Sprintf("/v1/admin/bannedPlayers/%d", steamID), nil, httpHeaders(nil))
 }
 
 // region /v1/admin/kickedPlayers
@@ -50,19 +50,19 @@ func (c *HTTPClient) DeleteV1AdminBannedPlayersSteamID(steamID uint64) (*http.Re
 //
 //	GET /v1/admin/kickedPlayers
 func (c *HTTPClient) GetV1AdminKickedPlayers() (*http.Response, error) {
-	return c.DoErr(http.MethodGet, "/v1/admin/kickedPlayers", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodGet, "/v1/admin/kickedPlayers", nil, httpHeaders(nil))
 }
 
 // PostV1AdminKickedPlayersSteamID kicks a player with the specified Steam ID and returns the HTTP response.
 //
 //	POST /v1/admin/kickedPlayers/{steam_id}
 func (c *HTTPClient) PostV1AdminKickedPlayersSteamID(steamID uint64) (*http.Response, error) {
-	return c.DoErr(http.MethodPost, fmt.Sprintf("/v1/admin/kickedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodPost, fmt.Sprintf("/v1/admin/kickedPlayers/%d", steamID), nil, httpHeaders(nil))
 }
 
 // DeleteV1AdminKickedPlayersSteamID un-kicks a player with the specified Steam ID and returns the HTTP response.
 //
 //	DELETE /v1/admin/kickedPlayers/{steam_id}
 func (c *HTTPClient) DeleteV1AdminKickedPlayersSteamID(steamID uint64) (*http.Response, error) {
-	return c.DoErr(http.MethodDelete, fmt.Sprintf("/v1/admin/kickedPlayers/%d", steamID), jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodDelete, fmt.Sprintf("/v1/admin/kickedPlayers/%d", steamID), nil, httpHeaders(nil))
 }

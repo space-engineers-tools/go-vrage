@@ -8,7 +8,7 @@ import "net/http"
 //
 //	GET /v1/server
 func (c *HTTPClient) GetV1ServerStatus() (*http.Response, error) {
-	return c.DoErr(http.MethodGet, "/v1/server", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodGet, "/v1/server", nil, httpHeaders(nil))
 }
 
 // DeleteV1Server stops the server and returns the HTTP response.
@@ -17,7 +17,7 @@ func (c *HTTPClient) GetV1ServerStatus() (*http.Response, error) {
 //
 //	DELETE /v1/server
 func (c *HTTPClient) DeleteV1Server() (*http.Response, error) {
-	return c.DoErr(http.MethodDelete, "/v1/server", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodDelete, "/v1/server", nil, httpHeaders(nil))
 }
 
 // region /v1/server/ping
@@ -26,5 +26,5 @@ func (c *HTTPClient) DeleteV1Server() (*http.Response, error) {
 //
 //	GET /v1/server/ping
 func (c *HTTPClient) GetV1ServerPing() (*http.Response, error) {
-	return c.DoErr(http.MethodGet, "/v1/server/ping", jsonMap(nil), httpHeaders(nil))
+	return c.DoErr(http.MethodGet, "/v1/server/ping", nil, httpHeaders(nil))
 }

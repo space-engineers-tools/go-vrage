@@ -21,9 +21,6 @@ import (
 // https://pkg.go.dev/net/http#MethodGet
 type httpMethod = string
 
-// jsonMap represents a jsonMap object returned by the API.
-type jsonMap = map[string]any
-
 // httpHeaders represents HTTP headers to be sent with the request.
 type httpHeaders = map[string]string
 
@@ -130,7 +127,7 @@ func buildURL(config *ClientConfig, endpoint string) string {
 func (c *HTTPClient) Do(
 	method httpMethod,
 	endpoint string,
-	jsonPayload jsonMap,
+	payload any,
 	headers httpHeaders,
 ) (*http.Response, error) {
 	url := buildURL(c.config, endpoint)
@@ -141,10 +138,10 @@ func (c *HTTPClient) Do(
 		return nil, err
 	}
 
-	if jsonPayload != nil {
-		payloadBytes, err := json.Marshal(jsonPayload)
+	if payload != nil {
+		payloadBytes, err := json.Marshal(payload)
 		if err != nil {
-			return nil, newErrAPIUnexpectedBody(fmt.Sprintf("failed to marshal JSON payload: %v", err))
+			return nil, newErrAPIUnexpectedBody(fmt.Sprintf("failed to marshal payload: %v", err))
 		}
 		request.Body = io.NopCloser(strings.NewReader(string(payloadBytes)))
 		request.Header.Set("Content-Type", "application/json")
@@ -173,10 +170,10 @@ func (c *HTTPClient) Do(
 func (c *HTTPClient) DoErr(
 	method httpMethod,
 	endpoint string,
-	jsonPayload jsonMap,
+	payload any,
 	headers httpHeaders,
 ) (*http.Response, error) {
-	response, err := c.Do(method, endpoint, jsonPayload, headers)
+	response, err := c.Do(method, endpoint, payload, headers)
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			return nil, newErrAPIRequestTimeout(c.config.Timeout)
