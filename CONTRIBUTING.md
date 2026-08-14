@@ -54,3 +54,4 @@ The following tools are recommended for development:
 - [golangci-lint](https://github.com/golangci/golangci-lint) is a linter for Go. You can manually run it or register it as a pre-push hook like shown in [.githooks/README.md](.githooks/README.md).
   - `nolint` should be used sparingly and be justified in the PR description. You can check existing `nolint` comments in the codebase for examples.
 - [pkgsite](https://github.com/golang/pkgsite) is a local version of [pkg.go.dev](https://pkg.go.dev/). It allows you to preview the documentation without publishing it.
+- [shfmt](https://github.com/mvdan/sh) is a shell script formatter. It can be used to format the [pre-push](.githooks/pre-push) script.
