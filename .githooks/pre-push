@@ -15,6 +15,14 @@ function check_installed() {
 	fi
 }
 
+function check_tidy() {
+	echo -e "${PREFIX} Checking go.mod and go.sum..."
+	if ! go mod tidy -diff >/dev/null 2>&1; then
+		echo "Error: go.mod or go.sum is not tidy. Please run 'go mod tidy' to fix it." >&2
+		exit 1
+	fi
+}
+
 function run_linters() {
 	echo -e "${PREFIX} Running linters..."
 	golangci-lint run
@@ -29,6 +37,7 @@ function main() {
 	echo -e "${PREFIX} Starting pre-push checks..."
 	check_installed "go"
 	check_installed "golangci-lint"
+	check_tidy
 	run_linters
 	run_tests
 	echo -e "${PREFIX} ${BOLD_GREEN}DONE!${RESET}"
