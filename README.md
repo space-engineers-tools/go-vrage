@@ -12,7 +12,10 @@
 
 ## Compatibility with Space Engineers
 
-[![Hotfix 1.210.013](https://img.shields.io/date/1786108278?&label=Hotfix+1.210.013&logo=steam)](https://steamdb.info/patchnotes/24434045/)
+Tested with
+
+[![Hotfix 1.210.014](https://img.shields.io/date/1786719734?&label=Hotfix+1.210.014&logo=steam)](https://steamdb.info/patchnotes/24555733/)
+<!-- Please use https://www.epochconverter.com/ to calculate the UTC timestamp for the time given on https://steamdb.info/app/244850/patchnotes -->
 
 ## API Coverage
 
