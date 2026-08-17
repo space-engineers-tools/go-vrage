@@ -2,6 +2,7 @@ package vrage
 
 import (
 	"log"
+	"time"
 )
 
 // APIServer provides access to the /v1/server API routes.
@@ -53,6 +54,25 @@ type APIServerStatusData struct {
 	UsedPCU           int     `json:"UsedPCU"`
 	Version           string  `json:"Version"`
 	WorldName         string  `json:"WorldName"`
+}
+
+// StartTime calculates the start time using time.Now() minus TotalTime (in seconds).
+func (a *APIServerStatusData) StartTime() time.Time {
+	if a.TotalTime == 0 {
+		return time.Time{}
+	}
+
+	duration := time.Duration(a.TotalTime) * time.Second
+	return time.Now().Add(-duration)
+}
+
+// DurationSinceStart returns the elapsed time since the server started.
+func (a *APIServerStatusData) DurationSinceStart() time.Duration {
+	if a.TotalTime == 0 {
+		return 0
+	}
+
+	return time.Duration(a.TotalTime) * time.Second
 }
 
 // Status returns the current status of the server. This includes information about the performance and the world.
