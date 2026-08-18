@@ -23,7 +23,7 @@ Tested with
 | ------------- | --------------------------------------------------------------- |
 | /v1/server    | ![100%](https://img.shields.io/badge/3%2F3-100%25-brightgreen)  |
 | /v1/admin     | ![100%](https://img.shields.io/badge/8%2F8-100%25-brightgreen)  |
-| /v1/session   | ![12.5%](https://img.shields.io/badge/2%2F16-12.5%25-orange)    |
+| /v1/session   | ![18.75%](https://img.shields.io/badge/3%2F16-18.75%25-orange)  |
 
 <details>
 <summary>Click to see an image of all endpoints</summary>

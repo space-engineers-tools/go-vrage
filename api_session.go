@@ -18,6 +18,42 @@ type APISession struct {
 
 // region /v1/session/chat
 
+// APISessionPlayer represents a player in the session.
+type APISessionPlayer struct {
+	SteamID      uint64 `json:"SteamID"`
+	DisplayName  string `json:"DisplayName"`
+	FactionName  string `json:"FactionName"`
+	FactionTag   string `json:"FactionTag"`
+	PromoteLevel int    `json:"PromoteLevel"`
+	Ping         int    `json:"Ping"`
+}
+
+// APISessionPlayersData represents the data returned by the GET /v1/session/players endpoint.
+type APISessionPlayersData struct {
+	Players []APISessionPlayer `json:"Players"`
+}
+
+// Players fetches the list of current players in the session.
+func (s *APISession) Players() (APIResponseWithData[APISessionPlayersData], error) {
+	var responseStruct APIResponseWithData[APISessionPlayersData]
+	httpResponse, err := s.http.GetV1SessionPlayers()
+	if err != nil {
+		return responseStruct, err
+	}
+	defer func() {
+		if err := httpResponse.Body.Close(); err != nil {
+			log.Printf("failed to close response body: %v", err)
+		}
+	}()
+
+	responseStruct, err = parseResponse[APIResponseWithData[APISessionPlayersData]](httpResponse)
+	if err != nil {
+		return responseStruct, err
+	}
+
+	return responseStruct, nil
+}
+
 // APISessionChatMessage represents a single chat message.
 type APISessionChatMessage struct {
 	SteamID     uint64 `json:"SteamID"`
