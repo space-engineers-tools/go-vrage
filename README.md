@@ -1,7 +1,7 @@
 # go-vrage
 
 [![license](https://img.shields.io/github/license/space-engineers-tools/go-vrage)](https://github.com/space-engineers-tools/go-vrage/blob/main/LICENSE)
-[![version](https://img.shields.io/github/v/tag/space-engineers-tools/go-vrage?sort=semver&label=version)](https://github.com/space-engineers-tools/go-vrage/releases)
+[![version](https://img.shields.io/github/v/tag/space-engineers-tools/go-vrage?sort=semver&label=version&logo=git&logoColor=ffffff)](https://github.com/space-engineers-tools/go-vrage/releases)
 [![go reference](https://pkg.go.dev/badge/github.com/space-engineers-tools/go-vrage.svg)](https://pkg.go.dev/github.com/space-engineers-tools/go-vrage)
 [![GitHub](https://img.shields.io/badge/GitHub-5c5c5c?&logo=github&logoColor=white)](https://github.com/space-engineers-tools/go-vrage)
 
